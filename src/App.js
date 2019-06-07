@@ -149,6 +149,7 @@ const Drawer = createDrawerNavigator(
   {
     Mastermode: {screen: Mastermode},
     Recordermode: {screen: Recordermode},
+    Recordermode2:{ screen: Recordermode2 },
     Master1: {screen: Master1},
     Top2: {screen: Top2},
 //    Selection: { screen: Selection },
@@ -181,7 +182,7 @@ const Drawer = createDrawerNavigator(
     NHDatePicker: { screen: NHDatePicker }
   },
   {
-    initialRouteName: "Mastermode",
+    initialRouteName: "Recordermode2",
     contentOptions: {
       activeTintColor: "#e91e63"
     },
@@ -193,7 +194,7 @@ const AppNavigator = createStackNavigator(
   {
     Drawer: { screen: Drawer },  //navigate 到 Drawer
     Selection: { screen: Selection },  //selection go to header  //改 to drawer
-    Recordermode2:{ screen: Recordermode2 },
+
 
     Header1: { screen: Header1 },
     Header2: { screen: Header2 },

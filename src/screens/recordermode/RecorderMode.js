@@ -9,6 +9,16 @@ import {
     Image
 } from 'react-native';
 
+import {
+  Header,
+  Icon,
+  Left,
+  Right,
+  Body,
+  Container,
+  Button,
+  Title
+} from "native-base";
 
 import Record from './Record';
 import Play from './Play';
@@ -73,8 +83,24 @@ export default class RecorderMode extends React.Component {
 
     render() {
         return (
+          <Container >
+          <Header style={styles.header}>
+            <Left>
+              <Button
+                transparent
+                onPress={() => this.props.navigation.openDrawer()}
+              >
+                <Icon name="menu" />
+              </Button>
+            </Left>
+            <Body>
+              <Title>Recoder</Title>
+            </Body>
+            <Right />
+          </Header>
+
             <View style={styles.root}>
-                <View style={styles.menuBar}></View>
+
                 <View style={styles.rpBar}>
 
 
@@ -98,6 +124,7 @@ export default class RecorderMode extends React.Component {
                 }
                 </View>
             </View>
+          </Container>
         );
     }
 }
@@ -105,6 +132,9 @@ export default class RecorderMode extends React.Component {
 const styles = StyleSheet.create({
     root: {
         flex: 1
+    },
+    header: {
+      backgroundColor: "#000000"  // 背景色
     },
     menuBar: {
         flex: 1,
