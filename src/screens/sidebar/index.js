@@ -16,48 +16,50 @@ import styles from "./style";
 
 const drawerCover = require("../../../assets/account-bg.jpg");
 const drawerImage = require("../../../assets/account.jpg");
-const datas = [
-  {
-    name: "Master Mode",
-    route: "Mastermode",  //要連到的mod
-    iconimage: require("./assets/Menu/menu_master_w.png"),
-    icon: "people",
-    bg: "#C5F442"
-  },
-  {
-    name: "Connection",
-    route: "Top2",
-    iconimage: require("./assets/Menu/connect_w.png"),
-    icon: "people",
-    bg: "#666666",
 
-  },
-  {
-    name: "Recorder Mode",
-    route: "Recordermode2",
-    iconimage: require("./assets/Menu/menu_recorder_w.png"),
-    icon: "people",
-    bg: "#666666",
 
-  },
-  {
-    name: "Play",
-    route: "Recordermode2",
-    iconimage: require("./assets/Menu/menu_play_w.png"),
-    icon: "people",
-    bg: "#666666",
-
-  }
-
-];
-
-class SideBar extends Component {
+class SideBar extends Component<Props> {
   constructor(props) {
     super(props);
     this.state = {
       shadowOffsetWidth: 1,
       shadowRadius: 4
     };
+
+    this.datas = [
+      {
+        name: "Master Mode",
+        route: "Mastermode",  //要連到的mod
+        iconimage: require("./assets/Menu/menu_master_w.png"),
+        icon: "people",
+        bg: "#C5F442"
+      },
+      {
+        name: "Connection",
+        route: this.props.screenProps.mode==1?"Master1":"Master1",
+        iconimage: require("./assets/Menu/connect_w.png"),
+        icon: "people",
+        bg: "#666666",
+
+      },
+      {
+        name: "Recorder Mode",
+        route: "Recordermode2",
+        iconimage: require("./assets/Menu/menu_recorder_w.png"),
+        icon: "people",
+        bg: "#666666",
+
+      },
+      {
+        name: "Play",
+        route: "Recordermode2",
+        iconimage: require("./assets/Menu/menu_play_w.png"),
+        icon: "people",
+        bg: "#666666",
+
+      }
+
+    ];
   }
 
   render() {
@@ -74,7 +76,7 @@ class SideBar extends Component {
                 <Thumbnail large source={require('../../../assets/minj.jpg')} />
           </ImageBackground>
           <List style={{backgroundColor: "#666666" }}
-            dataArray={datas}
+            dataArray={this.datas}
             renderRow={data =>
               <ListItem
                 button

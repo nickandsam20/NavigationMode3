@@ -37,7 +37,7 @@ export default class Connected_card extends Component<Props>{
     }
 
     render(){
-
+    //  console.log(this.props.connected_device);
       return this.props.connected_device.map((device)=>{
             return(
               <View>

@@ -53,7 +53,11 @@ export default class Master2 extends Component<Props>{
 
                 </View>
                 <View style={{flex:3}}>
-                    <Button type='solid' title="OK" buttonStyle={styles.button} onPress={()=>this.props.ch_page(3)}/>
+                    <Button type='solid' title="OK" buttonStyle={styles.button} onPress={()=>{
+                      //this.props.ch_page(3)
+                    //  console.log("press");
+                      this.props.navigation.navigate("Master_main_page");
+                    }}/>
 
                 </View>
 

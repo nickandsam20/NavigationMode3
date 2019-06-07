@@ -36,6 +36,7 @@ export default class Card_list extends Component<Props>{
     }
 
     render(){
+     //console.log("g",this.props.connected_device());
       return(
         <View style={{backgroundColor:''}}>
             <Text style={{fontSize:fontSize2,color:styles.text.color}}>{this.props.type} device:{this.props.connected_device_cnt}</Text>

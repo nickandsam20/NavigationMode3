@@ -38,13 +38,25 @@ export default class Master_main_page extends Component<Props>{
 
     render() {
       let info,info2;
+      //console.log(this.props.screenProps.get_connected_device());
+      //console.log(this.props.screenProps)
       //if(this.props.connected_device_cnt==0)
-
-      info=<Card_list type="connected" connected_device={this.props.connected_device} connected_device_cnt={this.props.connected_device_cnt}/>;
-      info2=<Card_list type="disconnected" connected_device={this.props.disconnected_device} connected_device_cnt={this.props.disconnected_device_cnt}/>;
+    //  console.log("main");
+    //let connected_device=this.props.screenProps.get_connected_device();
+    //let connected_device=this.props.screenProps.connected_device;
+    //let disconnected_device=this.props.screenProps.get_disconnected_device();
+  //  let connected_device_cnt=this.props.screenProps.get_connected_device_cnt();
+    //let disconnected_device_cnt=this.props.screenProps.get_disconnected_device_cnt();
+  //  console.log(connected_device);
+    //console.log(this.props.screenProps.get_connected_device());
+    //  info=<Card_list type="connected" connected_device={this.props.screenProps.get_connected_device} connected_device_cnt={this.props.screenProps.get_connected_device_cnt}/>;
+    //  info2=<Card_list type="disconnected" connected_device={this.props.screenProps.get_disconnected_device} connected_device_cnt={this.props.screenProps.get_disconnected_device_cnt}/>;
+      info=<Card_list type="connected" connected_device={this.props.screenProps.connected_device} connected_device_cnt={this.props.screenProps.connected_device_cnt}/>;
+      info2=<Card_list type="disconnected" connected_device={this.props.screenProps.disconnected_device} connected_device_cnt={this.props.screenProps.disconnected_device_cnt}/>;
+    ;
       return (
         <View style={styles.background_view}>
-          <Text style={{fontSize:fontSize3,color:special_text_color}}>connection number:{this.props.room}</Text>
+          <Text style={{fontSize:fontSize3,color:special_text_color}}>connection number:{this.props.screenProps.get_room()}</Text>
           <Card >
              <CardItem bordered >
                   <View style={{flex:1,backgroundColor:'',flexDirection:'row',justifyContent:'space-between'}}>
@@ -57,7 +69,12 @@ export default class Master_main_page extends Component<Props>{
         {info}
         {info2}
 
-
+        <Button onPress={()=>{
+          let msg={};
+          msg.event="device_join";
+          msg.data={user_name:"1",track:"1"};
+          this.props.screenProps.ws_fire_event(JSON.stringify(msg));
+        }}/>
         </View>
       );
   }
