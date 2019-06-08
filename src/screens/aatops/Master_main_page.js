@@ -1,9 +1,21 @@
 import React ,{Component} from 'react';
 import {View,Text} from 'react-native';
 import { StyleSheet } from 'react-native';
-import { Button,Image } from 'react-native-elements';
+import { Image } from 'react-native-elements';
 import { ActivityIndicator } from 'react-native';
-import { Container, Header, Content, Card, CardItem, Body ,Right,Icon} from 'native-base';
+
+import {
+  Header,
+  Icon,
+  Left,
+  Right,
+  Body,
+  Container,
+  Content,
+  Button,
+  Title,
+  Card, CardItem,
+} from "native-base";
 import No_connected from './No_connected';
 import Card_list from './Card_list';
 const fontSize1=30;
@@ -56,7 +68,34 @@ export default class Master_main_page extends Component<Props>{
     ;
       return (
         <View style={styles.background_view}>
-          <Text style={{fontSize:fontSize3,color:special_text_color}}>connection number:{this.props.screenProps.get_room()}</Text>
+        {
+          <Header style={styles.header}>
+          <Left>
+            <Button
+              transparent
+              onPress={() => this.props.navigation.openDrawer()}
+            >
+              <Icon name="menu" />
+            </Button>
+          </Left>
+          <Body>
+            <Title>Recorder</Title>
+          </Body>
+          <Right />
+        </Header>
+      }
+
+
+          <View style={{flexDirection:'row'}}>
+              <Text style={{fontSize:fontSize3,color:special_text_color}}>connection number:{this.props.screenProps.get_room()}</Text>
+            {
+            //   <Button  title="Recoder" onPress={()=>{
+            //       if(this.props.screenProps.mode==2)this.props.navigation.navigate("Recordermode2");
+            //       else this.props.navigation.navigate("MasterMode");
+            //   }}/>
+            }
+          </View>
+
           <Card >
              <CardItem bordered >
                   <View style={{flex:1,backgroundColor:'',flexDirection:'row',justifyContent:'space-between'}}>

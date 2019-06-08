@@ -36,7 +36,7 @@ class SideBar extends Component<Props> {
       },
       {
         name: "Connection",
-        route: this.props.screenProps.room==-1?(this.props.screenProps.mode==1?"Master1":"Client_connect1"):"Master_main_page",    
+        route: this.props.screenProps.room==-1?(this.props.screenProps.mode==1?"Master1":"Client_connect1"):"Master_main_page",
         iconimage: require("./assets/Menu/connect_w.png"),
         icon: "people",
         bg: "#666666",
@@ -60,8 +60,13 @@ class SideBar extends Component<Props> {
       }
 
     ];
-  }
+  };
+  componentWillReceiveProps(nextProps){
+  if(nextProps.screenProps.room!=this.props.screenProps.room){
 
+    this.datas[1].route=nextProps.screenProps.room==-1?(nextProps.screenProps.mode==1?"Master1":"Client_connect1"):"Master_main_page";
+  }
+}
   render() {
     return (
       <Container>

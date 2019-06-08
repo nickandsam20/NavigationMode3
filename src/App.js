@@ -159,6 +159,7 @@ export default class App extends Component<Props>{
           Recordermode2:{ screen: Recordermode2 },
           Master1: {screen: Master1},
           Top2: {screen: Top2},
+          Master_main_page:{screen:Master_main_page},
       //    Selection: { screen: Selection },
           Home: { screen: Home },
           Anatomy: { screen: Anatomy },
