@@ -1,17 +1,36 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
+import AudioRecorderPlayer from 'react-native-audio-recorder-player';
 import {
     View,
-    StyleSheet, 
-    Text,
+    StyleSheet,
     TouchableHighlight,
     PermissionsAndroid,
     Platform,
     AsyncStorage
 } from 'react-native';
+import {
+  Thumbnail,
+  Container,
+  Header,
+  Title,
+  Text,
+  Content,
+  Button,
+  Icon,
+  Badge,
+  Left,
+  Right,
+  Body,
+  Footer,
+  Item,
+  Input
+} from "native-base";
 
-import AudioRecorderPlayer from 'react-native-audio-recorder-player';
+const startButton = require("./assets/RecorderMode/start_cute.png");
+const stopButton = require("./assets/RecorderMode/stop.png");
+const deleteButton = require("./assets/RecorderMode/delete.png");
+const pauseButton = require("./assets/RecorderMode/pause.png");
 
 export default class Record extends React.Component {
 
@@ -25,9 +44,13 @@ export default class Record extends React.Component {
         this.state = {
             recordSecs: 0,
             recordTime: '00:00:00',
-            filename: 'sample',
-            nameCount: 0,
-            isRecording: false
+            filename: 'Recording #',
+            nameCount: 1,
+            isRecording: false,
+            recordBtn:startButton,
+            deleteBtn:deleteButton,
+            stopBtn:stopButton,
+
         };
 
         this.audioRecorderPlayer = new AudioRecorderPlayer();
@@ -38,13 +61,13 @@ export default class Record extends React.Component {
             if(JSON.parse(value)) {
                 this.setState({
                     nameCount: JSON.parse(value),
-                    filename: 'sample' + JSON.parse(value)
+                    filename: 'Recording #' + JSON.parse(value)
                 });
             }
             else{
                 this.setState({
-                    nameCount: 0,
-                    filename: 'sample0'
+                    nameCount: 1,
+                    filename: 'Recording #1'
                 });
             }
         });
@@ -65,7 +88,7 @@ export default class Record extends React.Component {
                     },
                 );
                 if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-                    console.log('You can use the camera');
+                    console.log('WRITE_EXTERNAL_STORAGE_Granted');
                 } else {
                     console.log('permission denied');
                     return;
@@ -86,7 +109,7 @@ export default class Record extends React.Component {
                     },
                 );
                 if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-                    console.log('You can use the camera');
+                    console.log('RECORD_AUDIO_Granted');
                 } else {
                     console.log('permission denied');
                     return;
@@ -97,10 +120,11 @@ export default class Record extends React.Component {
             }
         }
 
-        const path = 'sdcard/' + this.state.filename + '.mp4';
+        const path = 'sdcard/' + this.state.filename + '.mp3';
         const result = await this.audioRecorderPlayer.startRecorder(path);
         this.setState({
-            isRecording: true
+            isRecording: true,
+            recordBtn:pauseButton
         });
         this.audioRecorderPlayer.addRecordBackListener((e) => {
             this.setState({
@@ -111,98 +135,130 @@ export default class Record extends React.Component {
         });
         console.log(result);
     }
-      
+
+
+
     onStopRecord = async () => {
         const result = await this.audioRecorderPlayer.stopRecorder();
         this.audioRecorderPlayer.removeRecordBackListener();
         this.setState({
             recordSecs: 0,
-            isRecording: false
+            isRecording: false,
+            recordBtn:startButton,
+            filename:this.state.title
         });
         this.props.addNewFile(this.state.filename);
         this.setState((prevState, props) => ({
             nameCount: prevState.nameCount + 1,
-            filename: 'sample' + (prevState.nameCount + 1)
+            filename: 'Recording #' + (prevState.nameCount + 1)
         }));
+        console.log(result);
+
+    }
+
+    deleteRecord = async () => {
+        const result = await this.audioRecorderPlayer.stopRecorder();
+        this.audioRecorderPlayer.removeRecordBackListener();
+        this.setState({
+            recordSecs: 0,
+            isRecording: false,
+            recordBtn:startButton
+        });
         console.log(result);
     }
 
     render() {
         return (
-            <View style={styles.root}>
-                <View style={styles.block}>
-                    <Text style={styles.timeText}>{ this.state.recordTime }</Text>
-                    <Text style={styles.nameText}>{ this.state.filename }</Text>
+            <Container style={styles.container}>
+                <View style={styles.time}>
+                      <Text style ={{fontSize:50, color:'#ffff',bold:true,height:60}}>{ this.state.recordTime }</Text>
                 </View>
+
+                <View style={styles.text}>
+                      <Item style={styles.name}>
+                         <Input placeholder={ this.state.filename }
+                                onChangeText={val => this.setState({title:val})}
+                                style={styles.input}/>
+
+                      </Item>
+                      <Text style ={{fontSize:16,color:'#ffff',bold:true,justifyContent:'center',alignItems: 'center'}}>ready to start</Text>
+                </View>
+
                 <View style={styles.buttomRow}>
-                    <TouchableHighlight 
-                        style={styles.deleteButton}>
-                        <Text>D</Text>
-                    </TouchableHighlight>
-                    <TouchableHighlight 
-                        style={styles.recordButton}
+                    <Button style={styles.delete}
+                        transparent
+                        onPress={this.deleteRecord}>
+                        <Thumbnail square small source={this.state.deleteBtn} style={{marginBottom: 10}} />
+                    </Button>
+                    <Button style={styles.record}
+                        transparent
                         onPress={this.onStartRecord}>
-                        <Text>
-                            { this.state.isRecording? 'P': 'R' }
-                        </Text>
-                    </TouchableHighlight>
-                    <TouchableHighlight 
-                        style={styles.saveButton}
+                        <Thumbnail square source={this.state.recordBtn} style={{marginBottom: 10}} />
+                    </Button>
+                    <Button  style={styles.stop}
+                        transparent
                         onPress={this.onStopRecord}>
-                        <Text>S</Text>
-                    </TouchableHighlight>
+                        <Thumbnail square small source={this.state.stopBtn} style={{marginBottom: 10}} />
+                    </Button>
                 </View>
-                <View style={styles.block}>
-                    <Text>Nothing to Show.</Text>
-                </View>
-                <View style={styles.block}>
-                    <Text>Nothing to Show.</Text>
-                </View>
-            </View>
+        </Container>
         );
     }
 }
 
 const styles = StyleSheet.create({
-    root: {
-        flex: 1,
-        backgroundColor: 'gray'
+    container: {
+
+        backgroundColor: '#484848'
     },
-    block: {
-        flex: 1,
-        justifyContent: 'center',
+    time:{
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      paddingTop: 20,
+
+    },
+     text: {
+        flex: 2,
+        justifyContent: 'flex-start',
         alignItems: 'center'
-    },
-    timeText: {
-        color: 'white',
-        fontSize: 32
-    },
-    nameText: {
-        color: 'white',
-        fontSize: 24
     },
     buttomRow: {
-        flex: 1,
+        flex:3,
         flexDirection: 'row',
-        justifyContent: 'space-around',
-        alignItems: 'center'
-    },
-    recordButton: {
-        backgroundColor: 'green',
-        borderRadius: 10,
         justifyContent: 'center',
         alignItems: 'center'
     },
-    saveButton: {
-        backgroundColor: 'red',
-        borderRadius: 10,
+
+    name:{
+      width: 180,
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginBottom: 6,
+    },
+    input:{
+      marginBottom:-10,
+      fontSize:20,
+      color:'#ffff',
+      height:42,
+      justifyContent:'center',
+      alignSelf:'center'
+    },
+
+    record: {
+        flex:1,
         justifyContent: 'center',
+        alignItems: 'center',
+        marginHorizontal: 20
+    },
+    stop: {
+        flex:2,
+        justifyContent: 'flex-start',
         alignItems: 'center'
     },
-    deleteButton: {
-        backgroundColor: 'red',
-        borderRadius: 10,
-        justifyContent: 'center',
+    delete: {
+        flex:2,
+        justifyContent: 'flex-end',
         alignItems: 'center'
     },
 });
