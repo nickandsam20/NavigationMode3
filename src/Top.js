@@ -61,7 +61,7 @@ export default class Top extends Component<Props>{
         send:this.send,
         ch_name:this.ch_name,
 
-        //master用這三條function來控制錄音開始/停止
+        //master用這些條function來控制錄音開始/停止
         all_start:this.all_device_start_record,
         all_stop:this.all_device_stop_record,
         single_stop:this.single_stop,
