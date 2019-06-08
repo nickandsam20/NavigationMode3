@@ -3,12 +3,27 @@ import PropTypes from 'prop-types';
 
 import {
     View,
-    StyleSheet, 
+    StyleSheet,
     Text,
-    TouchableHighlight
+    TouchableHighlight,
+    Image
 } from 'react-native';
 
+import {
+  Picker,
+  Icon,
+  Left,
+  Right,
+  Body,
+  ListItem,
+  Button,
+  Thumbnail
+} from "native-base";
+const Item = Picker.Item;
+
 import AudioRecorderPlayer from 'react-native-audio-recorder-player';
+const onplayBtn = require("./assets/Play/play.png");
+const offplayBtn = require("./assets/Play/pause.png");
 
 export default class FileItem extends React.Component {
 
@@ -23,12 +38,13 @@ export default class FileItem extends React.Component {
             currentDurationSec: 0,
             playTime: '00:00:00',
             duration: '00:00:00',
-            isPlaying: false
+            isPlaying: false,
+            selected1: "key1",
         };
 
         this.audioRecorderPlayer = new AudioRecorderPlayer();
     }
-      
+
     onStartPlay = async () => {
         console.log('onStartPlay');
         const path = 'sdcard/' + this.props.filename + '.mp4';
@@ -51,14 +67,14 @@ export default class FileItem extends React.Component {
             return;
         });
     }
-      
+
     onPausePlay = async () => {
         await this.audioRecorderPlayer.pausePlayer();
         this.setState({
             isPlaying: false
         });
     }
-      
+
     onStopPlay = async () => {
         console.log('onStopPlay');
         this.audioRecorderPlayer.stopPlayer();
@@ -68,19 +84,40 @@ export default class FileItem extends React.Component {
         });
     }
 
+    onValueChange(value: string) {
+    this.setState({
+      selected1: value
+    });
+    }
+
     render() {
         return (
-            <View style={styles.root}>
-                <TouchableHighlight 
-                    style={styles.playButton}
-                    onPress={ this.state.isPlaying ? this.onPausePlay : this.onStartPlay }>
-                    <Text>{ this.state.isPlaying ? 'p' : 'P' }</Text>
+          <View style={styles.root }>
+            <Left style={{flex:1, alignItems: 'center', marginTop:5, marginBottom:5,marginRight:10 }}>
+                <TouchableHighlight underlayColor='#666666' onPress={ this.state.isPlaying ? this.onPausePlay : this.onStartPlay }>
+                    <Image style={{width:40, height:40}}  source={this.state.isPlaying ? offplayBtn:onplayBtn}/>
                 </TouchableHighlight>
+
+              </Left>
+              <Body style={{flex:4, alignItems: 'flex-start'}}>
                 <Text style={styles.fileInfo}>{ this.props.filename }</Text>
-                <TouchableHighlight 
-                    style={styles.optionButton}>
-                    <Text>M</Text>
-                </TouchableHighlight>
+                <Text numberOfLines={1} note>06/05   {this.state.playTime}</Text>
+              </Body>
+
+
+             <Right  style={{flex:4}}>
+                <View style={{flexDirection: 'row'}} >
+                   <Button transparent  style={{marginHorizontal:10}}>
+                      <Image style={{width:20, height:20}}  source={require("./assets/Play/rename.png")}/>
+
+                    </Button >
+
+                  <Button transparent style={{smarginHorizontal:10,marginRight:10,marginLeft:10} }>
+                      <Image style={{width:20, height:20}}  source={require("./assets/Play/delete.png")}/>
+
+                  </Button >
+                </View>
+              </Right>
             </View>
         );
     }
@@ -89,24 +126,29 @@ export default class FileItem extends React.Component {
 const styles = StyleSheet.create({
     root: {
         flex: 1,
-        backgroundColor: 'white',
-        flexDirection: 'row'
+        backgroundColor: '#666666',
+        flexDirection: 'row',
+        padding:7,
+        marginBottom:1
     },
+    rooticon: {
+        flexDirection: 'row',
+        marginTop:30
+    },
+
     playButton: {
-        flex: 1,
-        backgroundColor: 'green',
-        borderRadius: 10,
-        justifyContent: 'center',
-        alignItems: 'center'
+
     },
     fileInfo: {
-        flex: 4,
-        color: 'black',
-        fontSize: 24
+        color: '#ffff',
+        fontSize: 20
     },
+    textinfo: {
+        color: '#212121',
+        fontSize: 13
+    },
+
     optionButton: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
+
     }
 });

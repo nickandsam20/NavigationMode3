@@ -6,7 +6,8 @@ import {
     TouchableHighlight,
     AsyncStorage,
     TouchableOpacity,
-    Image
+    Image,
+
 } from 'react-native';
 
 import {
@@ -16,6 +17,7 @@ import {
   Right,
   Body,
   Container,
+  Content,
   Button,
   Title
 } from "native-base";
@@ -24,10 +26,36 @@ import Record from './Record';
 import Play from './Play';
 
 
-const onplayBtn = require("./assets/RecorderMode/play_blue_line.png");
+const onplayBtn = require("./assets/RecorderMode/playcontent.png");
 const offplayBtn = require("./assets/RecorderMode/play_black.png");
-const onreocrdBtn = require("./assets/RecorderMode/record_blue_line.png");
+const onreocrdBtn = require("./assets/RecorderMode/recordcontent.png");
 const offrecordBtn = require("./assets/RecorderMode/record_black.png");
+
+const styles = StyleSheet.create({
+        container: {
+            flex: 1
+        },
+        header: {
+          backgroundColor: "#212121"  // 背景色
+        },
+
+        switch: {
+
+            backgroundColor: '#484848',
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'center',
+            paddingTop: 10,
+        },
+        content: {
+            flex:5,
+            backgroundColor: '#484848',
+        },
+        footer:{
+          backgroundColor: "#484848",
+          height:24
+        }
+  });
 
 export default class RecorderMode extends React.Component {
 
@@ -78,12 +106,13 @@ export default class RecorderMode extends React.Component {
         this.setState((prevState, props) => ({
             fileList: [...prevState.fileList, filename]
         }));
-        AsyncStorage.setItem('fileList', JSON.stringify(this.state.fileList));
-    }
+        AsyncStorage.setItem('fileList', JSON.stringify(this.state.fileList)); }
+
+
 
     render() {
         return (
-          <Container >
+          <Container style={styles.container}>
           <Header style={styles.header}>
             <Left>
               <Button
@@ -94,62 +123,40 @@ export default class RecorderMode extends React.Component {
               </Button>
             </Left>
             <Body>
-              <Title>Recoder</Title>
+              <Title>Recorder</Title>
             </Body>
             <Right />
           </Header>
 
-            <View style={styles.root}>
-
-                <View style={styles.rpBar}>
 
 
-                <View style={{flex: 1, alignItems: 'center',justifyContent: 'center', marginLeft: 20}}>
+            <View style={styles.switch}>
+
+                <View style={{flex: 1, alignItems: 'center',justifyContent: 'center'}}>
                   <TouchableOpacity onPress={this.recordPress} >
                     <Image source={this.state.isRecord ? onreocrdBtn : offrecordBtn}/>
                   </TouchableOpacity>
                 </View>
 
-                <View style={{flex: 1, alignItems: 'center',justifyContent: 'center', marginRight:20 }}>
+                <View style={{flex: 1, alignItems: 'center',justifyContent: 'center'}}>
                   <TouchableOpacity onPress={this.playPress}>
                     <Image source={this.state.isRecord ? offplayBtn:onplayBtn}/>
                   </TouchableOpacity>
                 </View>
-                </View>
-                <View style={styles.content}>
+              </View>
+          <Content style={styles.content}>
+
                 {
                     this.state.isRecord ?
                     <Record addNewFile={this.addNewFile} /> :
                     <Play fileList={this.state.fileList} />
                 }
-                </View>
+
+          </Content>
+            <View style={styles.footer}>
+            <Image source={require('../../../assets/trademark.png')} style={{alignSelf: 'center',justifyContent: 'center'}} />
             </View>
-          </Container>
+      </Container>
         );
     }
 }
-
-const styles = StyleSheet.create({
-    root: {
-        flex: 1
-    },
-    header: {
-      backgroundColor: "#000000"  // 背景色
-    },
-    menuBar: {
-        flex: 1,
-        backgroundColor: '#212121'
-    },
-    rpBar: {
-        flex: 1,
-        backgroundColor: '#484848',
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    content: {
-        flex: 6,
-        backgroundColor: '#484848'
-    }
-
-});
