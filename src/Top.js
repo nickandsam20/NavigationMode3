@@ -23,7 +23,8 @@ export default class Top extends Component<Props>{
       this.send=this.send.bind(this);
       this.device_join=this.device_join.bind(this);
       this.ws_fire_event=this.ws_fire_event.bind(this);
-
+      this.ch_name=this.ch_name.bind(this);
+      this.ch_recorder_name=this.ch_recorder_name.bind(this);
 
       this.connect=new Connection(this.ws_fire_event);
 
@@ -36,7 +37,8 @@ export default class Top extends Component<Props>{
         connected_device:[
           // {
           //   user_name:'1',
-          //   track:1
+          //   track:1,
+          //    uid:...
           // },
           // {
           //   user_name:'2',
@@ -51,16 +53,10 @@ export default class Top extends Component<Props>{
         ch_mode:this.ch_mode,
         set_room_number:this.set_room_number,
         get_room:this.get_room,
-        //connected_device:this.state.connected_device,
-        //disconnected_device:this.state.disconnected_device,
-        //get_connected_device:this.get_connected_device,
-        //get_disconnected_device:this.get_disconnected_device,
-        //get_connected_device_cnt:this.get_connected_device_cnt,
-        //get_disconnected_device_cnt:this.get_disconnected_device_cnt,
         ws_fire_event:this.ws_fire_event,
         send:this.send,
-        //connected_device:this.state.connected_device,
-        //connected_device_cnt:this.state.connected_device_cnt
+        ch_name:this.ch_name
+
       };
 
 
@@ -95,6 +91,10 @@ export default class Top extends Component<Props>{
   //     this.setState({page:p});
   //     console.log("press");
   // }
+
+  ch_name(n){
+    this.setState({name:n});
+  }
   ws_fire_event(e){
       console.log("fire");
       let msg=JSON.parse(e);
@@ -103,19 +103,37 @@ export default class Top extends Component<Props>{
         case 'device_join':
               this.device_join(msg.data)
         break;
+
+        case 'ch_name':
+              this.ch_recorder_name(msg.uid,msg.new_name);
+        break;
+
         default:
           console.log("default");
       }
       //this.device_join();
       //console.log(this.state);
   }
+  ch_recorder_name(uid,new_name){
+    this.setState((prevState)=>{
+          let tmp=prevState.connected_device;
+          tmp.forEach(d=>{
+              if(d.uid==uid){
+                d.user_name=new_name;
+                return false;
+              }
+          });
+          this.setState({connected_device:tmp});
+    })
+  }
   device_join(d){
       console.log("device join");
-
+      //console.log(d);
       this.setState({connected_device:[...this.state.connected_device,d],connected_device_cnt:this.state.connected_device_cnt+1});
       //else this.setState({connected_device:[d],connected_device_cnt:this.state.connected_device_cnt+1});
 
   }
+
   send(msg){
     this.connect.send(msg);
   }
@@ -135,7 +153,7 @@ export default class Top extends Component<Props>{
 
   ch_mode(m){
       this.setState({mode:m});
-      console.log("ch_mode")
+      console.log("ch_mode ",m);
   }
   set_room_number(n){
     this.setState({room:n});

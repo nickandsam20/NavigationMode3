@@ -36,7 +36,7 @@ class SideBar extends Component<Props> {
       },
       {
         name: "Connection",
-        route: this.props.screenProps.mode==1?"Master1":"Master1",
+        route: this.props.screenProps.room==-1?(this.props.screenProps.mode==1?"Master1":"Client_connect1"):"Master_main_page",    
         iconimage: require("./assets/Menu/connect_w.png"),
         icon: "people",
         bg: "#666666",

@@ -35,7 +35,7 @@ export default class Client_connect_success extends Component<Props>{
     return(
 
         <View style={styles.background_view}>
-            <KeyboardAvoidingView behavior="height"  style={styles.form}>
+            <KeyboardAvoidingView behavior=""  style={styles.form}>
                 <View style={{flex:2}}></View>
                 <View style={{backgroundColor:'',flex:2,alignItems:'center'}}>
                     <Text style={{fontSize:fontSize1, color:styles.text.color, textAlign:'center'}}>Connect Successfully!!</Text>
@@ -72,7 +72,9 @@ export default class Client_connect_success extends Component<Props>{
                     // this.props.screenProps.send({event:'join_room',user_id:'master',room:this.room_number});
                      //this.props.screenProps.set_room_number(this.room_number);
                       //this.props.ch_mode(2);
-                      this.props.navigation.navigate("Master_main_page")
+                      this.props.screenProps.send({event:'ch_name',  new_name:this.name,  room:this.room_number});
+                      this.props.screenProps.ch_name(this.name);
+                      this.props.navigation.navigate("Master_main_page");
                     }}/>
 
                 </View>

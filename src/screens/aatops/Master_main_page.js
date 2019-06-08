@@ -61,7 +61,7 @@ export default class Master_main_page extends Component<Props>{
              <CardItem bordered >
                   <View style={{flex:1,backgroundColor:'',flexDirection:'row',justifyContent:'space-between'}}>
                       <View style={{alignSelf:'flex-start',backgroundColor:''}}><Text style={{fontSize:fontSize2}}>Master</Text></View>
-                      <View style={{alignSelf:'flex-end',backgroundColor:''}}><Text style={{fontSize:fontSize2}}>master name</Text></View>
+                      <View style={{alignSelf:'flex-end',backgroundColor:''}}><Text style={{fontSize:fontSize2}}>master</Text></View>
                   </View>
              </CardItem>
          </Card>

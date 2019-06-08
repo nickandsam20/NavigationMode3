@@ -11,6 +11,9 @@ import Master2 from "./screens/aatops/Master2";
 import Master_main_page from "./screens/aatops/Master_main_page";
 import Recordermode from "./screens/aatops/Recordermode";
 import Recordermode2 from "./screens/recordermode/RecorderMode";
+import Client_connect1 from "./screens/aatops/Client_connect1";
+import Client_connect_fail from "./screens/aatops/Client_connect_fail";
+import Client_connect_success from "./screens/aatops/Client_connect_success";
 
 import Header from "./screens/Header/";
 import Header1 from "./screens/Header/1";
@@ -202,6 +205,10 @@ export default class App extends Component<Props>{
           Master1:{screen:Master1},
           Master2:{screen:Master2},
           Master_main_page:{screen:Master_main_page},
+          Client_connect1:{screen:Client_connect1},
+          Client_connect_fail:{screen:Client_connect_fail},
+          Client_connect_success:{screen:Client_connect_success},
+
 
           Header1: { screen: Header1 },
           Header2: { screen: Header2 },
