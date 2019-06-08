@@ -158,7 +158,6 @@ class Mastermode extends Component {
         }}>
           <Thumbnail square source={this.state.record} style={{marginBottom: 10,width:50}} />
         </Button>
-
     <View style={{flex: 4}}>
     <Text style ={{fontSize:50, color:'#ffff',bold:true,height:60}}>00:00:00</Text>
 
