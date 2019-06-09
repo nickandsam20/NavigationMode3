@@ -59,7 +59,16 @@ export default class Master2 extends Component<Props>{
                     //  console.log("press");
                       this.props.navigation.navigate("Master_main_page");
                     }}/>
-
+                    <Button  type='solid' title="send" style={{backgroundColor:'red'}} onPress={()=>{
+                      let msg={};
+                      // msg.event="device_join";
+                      // msg.data={user_name:"1",track:"1"};
+                      // this.props.screenProps.ws_fire_event(JSON.stringify(msg));
+                      if(this.props.screenProps.mode==1){
+                        if(this.props.screenProps.record_stste==0)this.props.screenProps.all_start();
+                        else this.props.screenProps.all_stop();
+                      }
+                    }}/>
                 </View>
 
         </View>

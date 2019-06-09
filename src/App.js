@@ -15,6 +15,7 @@ import Recordermode2 from "./screens/recordermode/RecorderMode";
 import Client_connect1 from "./screens/aatops/Client_connect1";
 import Client_connect_fail from "./screens/aatops/Client_connect_fail";
 import Client_connect_success from "./screens/aatops/Client_connect_success";
+import PlayMode from './screens/aatops/PlayMode';
 
 import Header from "./screens/Header/";
 import Header1 from "./screens/Header/1";
@@ -161,6 +162,7 @@ export default class App extends Component<Props>{
           Master1: {screen: Master1},
           Top2: {screen: Top2},
           Master_main_page:{screen:Master_main_page},
+          PlayMode:{screen:PlayMode},
       //    Selection: { screen: Selection },
           ConnectSelect:{screen:ConnectSelect},
           Home: { screen: Home },
@@ -212,7 +214,7 @@ export default class App extends Component<Props>{
           Client_connect_fail:{screen:Client_connect_fail},
           Client_connect_success:{screen:Client_connect_success},
 
-
+          PlayMode:{screen:PlayMode},
           Header1: { screen: Header1 },
           Header2: { screen: Header2 },
           Header3: { screen: Header3 },

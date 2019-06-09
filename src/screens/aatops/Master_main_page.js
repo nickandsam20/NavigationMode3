@@ -116,12 +116,6 @@ export default class Master_main_page extends Component<Props>{
         {info}
         {info2}
 
-        <Button onPress={()=>{
-          let msg={};
-          msg.event="device_join";
-          msg.data={user_name:"1",track:"1"};
-          this.props.screenProps.ws_fire_event(JSON.stringify(msg));
-        }}/>
         </View>
       );
   }
