@@ -71,7 +71,7 @@ export default class Top extends Component<Props>{
         //下載檔案
         download:this.download,
         upload:this.upload,
-        record_stste:0,
+        record_state:0,
         all_close:this.all_close
       };
 
@@ -137,7 +137,7 @@ export default class Top extends Component<Props>{
       msg.data="start";
       msg.room=this.state.room;
       this.connect.send(msg);
-      this.setState({record_stste:1});
+      this.setState({record_state:1});
     }else alert("you must connect first");
 
   }
@@ -151,7 +151,7 @@ export default class Top extends Component<Props>{
       msg.data="stop";
       msg.room=this.state.room;
       this.connect.send(msg);
-      this.setState({record_stste:1});
+      this.setState({record_state:1});
     }else alert("you must connect first");
 
   }
