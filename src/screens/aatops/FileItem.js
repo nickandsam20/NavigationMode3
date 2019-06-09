@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#666666',
         flexDirection: 'row',
-        marginVertical: 4,
+        marginBottom: 1,
         paddingVertical: 8
     },
     playButton: {

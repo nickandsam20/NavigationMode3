@@ -94,14 +94,35 @@ class Mastermode extends Component {
       Track1on:false,Track2on:false,Track3on:false,
       hearT1:false,hearT2:false,hearT3:false,
       hearT1Btn:listen,hearT2Btn:listen,hearT3Btn:listen,
-      isPlaying:false
+      isPlaying:false,
+      counter:0,
+      min: 0,
+      sec: 0
     };
       this.audioRecorderPlayer = new AudioRecorderPlayer();
+      this.onStartRecord = this.onStartRecord.bind(this);
+      this.onStopRecord = this.onStopRecord.bind(this);
       this.onStartPlay=this. onStartPlay.bind(this);
       this.onPausePlay=this. onPausePlay.bind(this);
-
+      this.timer = null;
     }
 
+
+  count = () => {
+    this.setState((prevState) => ({
+      counter: prevState.counter + 1,
+      min: Math.floor((prevState.counter + 1) / 60) % 60,
+      sec: (prevState.counter + 1) % 60,
+    }));
+  }
+
+    onStartRecord() {
+      this.timer = setInterval(this.count, 1000);
+    }
+
+    onStopRecord() {
+      clearInterval(this.timer);
+    }
 
   // onStartPlay() {
   //    console.log('start-play');
@@ -154,18 +175,27 @@ class Mastermode extends Component {
           transparent
           onPress={ (onrecord) =>{
             console.log("press");
-            if(this.state.onrecord){this.props.screenProps.all_stop()}
-            else (this.props.screenProps.all_start())
+            if(this.state.onrecord){
+              this.onStopRecord();
+              this.props.screenProps.all_stop()
+
+            }
+            else {
+              this.onStartRecord();
+              this.props.screenProps.all_start()
+            }
           this.state.onrecord ?(this.setState({onrecord:false,record:start})) :
           (this.setState({onrecord:true,record:stop}));
-          
+
 
 
         }}>
           <Thumbnail square source={this.state.record} style={{marginBottom: 10,width:50}} />
         </Button>
-    <View style={{flex: 4}}>
-    <Text style ={{fontSize:50, color:'#ffff',bold:true,height:60}}>00:00:00</Text>
+    <View style={{flex: 5}}>
+    <Text style ={{fontSize:50, color:'#ffff',bold:true,height:60}}>
+    {this.state.min >= 10 ? this.state.min : '0'+this.state.min}:{this.state.sec >= 10 ? this.state.sec : '0'+this.state.sec}:00
+    </Text>
 
     <Item style={{width:180}}>
                 <Input placeholder="Type Title Here"
@@ -176,9 +206,9 @@ class Mastermode extends Component {
     </View>
     </View>
 
-  <View style={{flex: 5, flexDirection: 'row',marginTop: 30}} >
+  <View style={{flex: 5, flexDirection: 'row',justifyContent: 'center',alignSelf:'center',paddingVertical: 15}} >
 
-  <View style={{flex:1,marginLeft: 15}}>
+  <View style={{flex:1,marginLeft: 30}}>
     <View>
     <View style={{flexDirection: 'row'}} >
     <Image style={{alignSelf: 'center'}} source={this.state.connectBtn} />
