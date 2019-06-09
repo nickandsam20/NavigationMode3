@@ -78,7 +78,7 @@ class SideBar extends Component<Props> {
   componentWillReceiveProps(nextProps){
   if(nextProps.screenProps.room!=this.props.screenProps.room){
 
-    this.datas[1].route=nextProps.screenProps.room==-1?"ConnectSelect":"Master_main_page";
+    this.datas[3].route=nextProps.screenProps.room==-1?"ConnectSelect":"Master_main_page";
   }
 }
   render() {
