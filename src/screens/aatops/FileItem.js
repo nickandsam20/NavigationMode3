@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import DialogInput from 'react-native-dialog-input';
+import { ConfirmDialog } from 'react-native-simple-dialogs';
 
 import {
     View,
-    StyleSheet, 
+    StyleSheet,
     Text,
     TextInput,
     Image,
@@ -22,20 +23,24 @@ export default class FileItem extends React.Component {
         filename: PropTypes.string.isRequired,
         callPlay: PropTypes.func.isRequired,
         deleteSelf: PropTypes.func.isRequired,
-        getNewName: PropTypes.func.isRequired
+        getNewName: PropTypes.func.isRequired,
+        Playing: PropTypes.bool.isRequired,
+        //truePlaying: PropTypes.bool.isRequired
     };
 
     constructor(props) {
         super(props);
         this.state = {
             text: '',
-            isDialogVisible: false
+            isDialogVisible: false,
+            dialogVisible: false
         };
         this.chooseFile = this.chooseFile.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
         this.rename = this.rename.bind(this);
         this.deleteDialog = this.deleteDialog.bind(this);
         this.sendInput = this.sendInput.bind(this);
+        this.Delete = this.Delete.bind(this);
     }
 
     chooseFile() {
@@ -43,6 +48,10 @@ export default class FileItem extends React.Component {
     }
 
     handleDelete() {
+        console.log("delete");
+        this.setState({
+            dialogVisible: false
+        })
         this.props.deleteSelf(this.props.filename);
     }
 
@@ -61,7 +70,7 @@ export default class FileItem extends React.Component {
             isDialogVisible: false
         })
     }
-    
+
     sendInput(inputText) {
         this.setState({
             isDialogVisible: false
@@ -70,16 +79,24 @@ export default class FileItem extends React.Component {
         this.getNewName(inputText, this.props.filename);
     }
 
+    Delete() {
+        this.setState({
+            dialogVisible: true
+        })
+    }
+
     render() {
+        //console.log(this.props.Playing);
         return (
             <View style={styles.root}>
-                <TouchableOpacity 
+                <TouchableOpacity
                     style={styles.playButton}
                     onPress={this.chooseFile}>
                     <Text style={styles.fileInfo}>{ this.props.filename }</Text>
                 </TouchableOpacity>
                 <Right style={{flex:4}}>
                     <View style={{flexDirection: 'row'}} >
+                        {this.props.Playing ? <Image style={{marginTop:9, marginRight:12}} source={require("../recordermode/assets/Play/play.png")}></Image> : <View></View>}
                         <Button transparent  style={{marginHorizontal:10}} onPress={this.rename}>
                             <Image style={{width:20, height:20}}  source={require("../recordermode/assets/Play/rename.png")}/>
                         </Button>
@@ -91,9 +108,28 @@ export default class FileItem extends React.Component {
                             >
                         </DialogInput>
 
-                        <Button transparent style={{smarginHorizontal:10,marginRight:10,marginLeft:10}}  onPress={this.handleDelete}>
+                        <Button transparent style={{smarginHorizontal:10,marginRight:10,marginLeft:10}}  onPress={this.Delete}>
                             <Image style={{width:20, height:20}}  source={require("../recordermode/assets/Play/delete.png")}/>
                         </Button>
+                        <ConfirmDialog
+                            title="Delete"
+                            message="Are you sure to delete this file?"
+                            visible={this.state.dialogVisible}
+                            onTouchOutside={() => this.setState({dialogVisible: false})}
+                            positiveButton={{
+                                title: "YES",
+                                onPress: () => {
+                                    this.setState({
+                                        dialogVisible: false
+                                    })
+                                    this.props.deleteSelf(this.props.filename);
+                                }
+                            }}
+                            negativeButton={{
+                                title: "NO",
+                                onPress: () => this.setState({dialogVisible: false})
+                            }}
+                        />
                     </View>
                 </Right>
             </View>

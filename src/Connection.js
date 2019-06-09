@@ -36,7 +36,7 @@ export default class Connection{
             RNFS.mkdir(RNFS.ExternalDirectoryPath+'/download').then(()=>{
               console.log("create folder");
               RNFS.downloadFile({
-                   fromUrl: 'http://10.0.2.2:4000/'+file_name,
+                   fromUrl: 'http://10.0.2.2:5000/'+file_name,
                    toFile: `${RNFS.ExternalDirectoryPath}/download/${file_name}`,
                    //headers
 
@@ -64,7 +64,7 @@ export default class Connection{
 
 
       upload(file_name){
-
+        console.log(RNFS.ExternalDirectoryPath+"/download/ddd.jpg");
 
         // FileTransfer.upload({
         //   uri: uri,
@@ -123,7 +123,7 @@ export default class Connection{
 
 
             console.log("here");
-            const url="http://10.0.2,2:5000/upload";
+            let url="https://192.168.191.81:5000/upload";
             console.log(url);
           uploadAudio = async () => {
              const path = RNFS.ExternalDirectoryPath+"/download/ddd.jpg";
@@ -138,6 +138,7 @@ export default class Connection{
                    method: 'POST',
                    headers: {
                      'Content-Type': 'multipart/form-data',
+                     "Connection": "close",
                    },
                    body: formData,
                  })
