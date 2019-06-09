@@ -71,6 +71,13 @@ export default class Record extends React.Component {
         AsyncStorage.setItem('nameCount', JSON.stringify(this.state.nameCount));
     }
 
+    componentWillReceiveProps(newProps) {
+        if(this.props.screenProps != newProps.screenProps) {
+            if(newProps.screenProps) this.onStartRecord();
+            else this.onStopRecord();
+        }
+    }
+
     onStartRecord = async () => {
         if (Platform.OS === 'android') {
             try {
@@ -113,12 +120,12 @@ export default class Record extends React.Component {
                 return;
             }
         }
-
+        console.log('ksjdjksjdksjdksjdksjdksjd');
         const path = 'sdcard/' + this.state.filename + '.mp4';
         const result = await this.audioRecorderPlayer.startRecorder(path);
         this.setState({
             isRecording: true,
-            recordBtn:pauseButton
+            recordBtn: pauseButton
         });
         this.audioRecorderPlayer.addRecordBackListener((e) => {
             this.setState({
