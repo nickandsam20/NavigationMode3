@@ -85,62 +85,67 @@ export default class Connection{
 
 
 
-/*
-            const data = new FormData();
-            const url="http://10.0.2.2:5000/" + "upload";
-            const path= RNFS.ExternalDirectoryPath+"/download/"+file_name
-            console.log(path);
+
+            // const data = new FormData();
+            // const url="https://calm-goat-12.localtunnel.me/upload";
+            // const path= RNFS.ExternalDirectoryPath+"/download/"+file_name
+            // console.log(path);
+            // console.log(url);
+            // data.append('fileData', {
+            // uri : path,
+            // // type: response.type,
+            // name: file_name
+            // });
+            // const config = {
+            //     method: 'POST',
+            //     headers: {
+            //     'Accept': 'application/json',
+            //     'Content-Type': 'multipart/form-data',
+            //     },
+            //     // headers: {
+            //   	// 	"Accept": "application/json",
+            //   	// 	"Content-Type": 'application/json',
+            //   	// 	"Connection": "close",
+            //   	// 	"type": "getUserData",
+            //     // },
+            //     body: data,
+            // };
+            //
+            // fetch(url, config)
+            // .then((checkStatusAndGetJSONResponse)=>{
+            // console.log(checkStatusAndGetJSONResponse);
+            // }).catch((err)=>{console.log(err)});
+
+
+
+
+            console.log("here");
+            const url="http://10.0.2,2:5000/upload";
             console.log(url);
-            data.append('fileData', {
-            uri : path,
-            // type: response.type,
-            name: file_name
-            });
-            const config = {
-                method: 'POST',
-                headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'multipart/form-data',
-                },
-                // headers: {
-              	// 	"Accept": "application/json",
-              	// 	"Content-Type": 'application/json',
-              	// 	"Connection": "close",
-              	// 	"type": "getUserData",
-                // },
-                body: data,
-            };
+          uploadAudio = async () => {
+             const path = RNFS.ExternalDirectoryPath+"/download/ddd.jpg";
+               const formData = new FormData()
+               formData.append('file', {
+                 uri: path,
+                 name: 'ddd.jpg',
+                 type: 'image/jpeg',
+               })
+               try {
+                 const res = await fetch(url, {
+                   method: 'POST',
+                   headers: {
+                     'Content-Type': 'multipart/form-data',
+                   },
+                   body: formData,
+                 })
+                 const json = await res.json()
+               } catch (err) {
+                 alert(err)
+               }
+           }
 
-            fetch(url, config)
-            .then((checkStatusAndGetJSONResponse)=>{
-            console.log(checkStatusAndGetJSONResponse);
-            }).catch((err)=>{console.log(err)});
-*/
+          uploadAudio();
 
 
-
-
-
-          // uploadAudio = async () => {
-          //    const path = RNFS.ExternalDirectoryPath+"/"+file_name;
-          //      const formData = new FormData()
-          //      formData.append('file', {
-          //        uri: path,
-          //        name: 'ddd.jpg',
-          //        type: 'image/jpeg',
-          //      })
-          //      try {
-          //        const res = await fetch("http://10.0.2.2:4000/upload", {
-          //          method: 'POST',
-          //          headers: {
-          //            'Content-Type': 'multipart/form-data',
-          //          },
-          //          body: formData,
-          //        })
-          //        const json = await res.json()
-          //      } catch (err) {
-          //        alert(err)
-          //      }
-          //  }
       }
 }
