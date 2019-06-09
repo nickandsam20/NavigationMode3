@@ -175,13 +175,13 @@ export default class Top extends Component<Props>{
             //開始錄音
             console.log("start record");
             //alert("3");
-            this.setState({record_stste:1});
+            this.setState({record_state:1});
         break;
 
         case 'stop':
             //停止錄音
             console.log("stop record");
-              this.setState({record_stste:0});
+              this.setState({record_state:0});
         break;
 
         case 'close':
