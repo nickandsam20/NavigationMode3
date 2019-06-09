@@ -29,7 +29,8 @@ export default class Top extends Component<Props>{
       this.all_device_stop_record=this.all_device_stop_record.bind(this);
       this.recorder_start=this.recorder_start.bind(this);
       this.recorder_stop=this.recorder_stop.bind(this);
-
+      this.download=this.download.bind(this);
+      this.upload=this.upload.bind(this);
       this.connect=new Connection(this.ws_fire_event);
 
       let init_state={
@@ -65,7 +66,10 @@ export default class Top extends Component<Props>{
         all_start:this.all_device_start_record,
         all_stop:this.all_device_stop_record,
         single_stop:this.single_stop,
-        single_start:this.single_start
+        single_start:this.single_start,
+        //下載檔案
+        download:this.download,
+        upload:this.upload
       };
 
 
@@ -86,6 +90,12 @@ export default class Top extends Component<Props>{
   //     this.setState({page:p});
   //     console.log("press");
   // }
+  upload(file_name){
+    this.connect.upload(file_name);
+  }
+  download(file_name){
+    this.connect.download(file_name);
+  }
   recorder_start(uid){
     if(this.state.room!=-1){
       let msg;
