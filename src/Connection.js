@@ -23,6 +23,9 @@ export default class Connection{
             this.send=this.send.bind(this);
 
       }
+      close(){
+        this.ws.close();
+      }
 
       send(e){
             if(this.ws.readyState==1) this.ws.send(JSON.stringify(e));

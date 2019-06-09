@@ -31,6 +31,7 @@ export default class Top extends Component<Props>{
       this.recorder_stop=this.recorder_stop.bind(this);
       this.download=this.download.bind(this);
       this.upload=this.upload.bind(this);
+      this.all_close=this.all_close.bind(this);
       this.connect=new Connection(this.ws_fire_event);
 
       let init_state={
@@ -71,6 +72,7 @@ export default class Top extends Component<Props>{
         download:this.download,
         upload:this.upload,
         record_stste:0,
+        all_close:this.all_close
       };
 
 
@@ -91,6 +93,13 @@ export default class Top extends Component<Props>{
   //     this.setState({page:p});
   //     console.log("press");
   // }
+  all_close(){
+    let msg;
+    msg.event="all_close";
+    msg.room=this.state.room;
+    this.setState({room:-1});
+    this.connect.send(msg);
+  }
   upload(file_name){
     this.connect.upload(file_name);
   }
@@ -171,6 +180,9 @@ export default class Top extends Component<Props>{
               this.setState({record_stste:0});
         break;
 
+        case 'close':
+          this.close();
+        break;
         default:
           console.log("default");
       }
