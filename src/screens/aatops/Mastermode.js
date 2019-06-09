@@ -152,9 +152,15 @@ class Mastermode extends Component {
      <View style={{flex: 1, flexDirection: 'row'}}>
         <Button style={{flex: 2,alignSelf: 'center',justifyContent: 'center'}}
           transparent
-          onPress={ (onrecord) =>{ this.state.onrecord ?
-          (this.setState({onrecord:false,record:start})) :
-          (this.setState({onrecord:true,record:stop}))
+          onPress={ (onrecord) =>{
+            console.log("press");
+            if(this.state.onrecord){this.props.screenProps.all_stop()}
+            else (this.props.screenProps.all_start())
+          this.state.onrecord ?(this.setState({onrecord:false,record:start})) :
+          (this.setState({onrecord:true,record:stop}));
+          
+
+
         }}>
           <Thumbnail square source={this.state.record} style={{marginBottom: 10,width:50}} />
         </Button>

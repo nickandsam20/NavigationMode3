@@ -129,7 +129,9 @@ export default class Top extends Component<Props>{
   }
 
   all_device_start_record(){
+
     if(this.state.room!=-1){
+      console.log("all start");
       let msg={};
       msg.event="all_start";
       msg.data="start";
@@ -141,7 +143,9 @@ export default class Top extends Component<Props>{
   }
 
   all_device_stop_record(){
+
     if(this.state.room!=-1){
+        console.log("all stop");
       let msg={};
       msg.event="all_stop";
       msg.data="stop";
