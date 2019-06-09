@@ -23,8 +23,15 @@ export default class Top extends Component<Props>{
       this.send=this.send.bind(this);
       this.device_join=this.device_join.bind(this);
       this.ws_fire_event=this.ws_fire_event.bind(this);
-
-
+      this.ch_name=this.ch_name.bind(this);
+      this.ch_recorder_name=this.ch_recorder_name.bind(this);
+      this.all_device_start_record=this.all_device_start_record.bind(this);
+      this.all_device_stop_record=this.all_device_stop_record.bind(this);
+      this.recorder_start=this.recorder_start.bind(this);
+      this.recorder_stop=this.recorder_stop.bind(this);
+      this.download=this.download.bind(this);
+      this.upload=this.upload.bind(this);
+      this.all_close=this.all_close.bind(this);
       this.connect=new Connection(this.ws_fire_event);
 
       let init_state={
@@ -61,6 +68,18 @@ export default class Top extends Component<Props>{
         send:this.send,
         //connected_device:this.state.connected_device,
         //connected_device_cnt:this.state.connected_device_cnt
+        ch_name:this.ch_name,
+
+        //master用這些條function來控制錄音開始/停止
+        all_start:this.all_device_start_record,//this.props.screenProps.all_start()
+        all_stop:this.all_device_stop_record, //this.props.screenProps.all_stop()
+        single_stop:this.single_stop,
+        single_start:this.single_start,
+        //下載檔案
+        download:this.download,
+        upload:this.upload,
+        record_stste:0,
+        all_close:this.all_close
       };
 
 
@@ -95,6 +114,67 @@ export default class Top extends Component<Props>{
   //     this.setState({page:p});
   //     console.log("press");
   // }
+  all_close(){
+    let msg;
+    msg.event="all_close";
+    msg.room=this.state.room;
+    this.setState({room:-1});
+    this.connect.send(msg);
+  }
+  upload(file_name){
+    this.connect.upload(file_name);
+  }
+  download(file_name){
+    this.connect.download(file_name);
+  }
+  recorder_start(uid){
+    if(this.state.room!=-1){
+      let msg={};
+      msg.event="single_start";
+      msg.data="start";
+      msg.room=this.state.room;
+      msg.uid=uid;
+      this.connect.send(msg);
+    }else alert("you must connect first");
+  }
+
+  recorder_stop(uid){
+    if(this.state.room!=-1){
+      let msg={};
+      msg.event="single_stop";
+      msg.data="stop";
+      msg.room=this.state.room;
+      msg.uid=uid;
+      this.connect.send(msg);
+    }else alert("you must connect first");
+  }
+
+  all_device_start_record(){
+    if(this.state.room!=-1){
+      let msg={};
+      msg.event="all_start";
+      msg.data="start";
+      msg.room=this.state.room;
+      this.connect.send(msg);
+      this.setState({record_stste:1});
+    }else alert("you must connect first");
+
+  }
+
+  all_device_stop_record(){
+    if(this.state.room!=-1){
+      let msg={};
+      msg.event="all_stop";
+      msg.data="stop";
+      msg.room=this.state.room;
+      this.connect.send(msg);
+      this.setState({record_stste:1});
+    }else alert("you must connect first");
+
+  }
+  ch_name(n){
+    this.setState({name:n});
+  }
   ws_fire_event(e){
       console.log("fire");
       let msg=JSON.parse(e);
@@ -102,6 +182,27 @@ export default class Top extends Component<Props>{
       switch (msg.event) {
         case 'device_join':
               this.device_join(msg.data)
+        break;
+
+        case 'ch_name':
+              this.ch_recorder_name(msg.uid,msg.new_name);
+        break;
+
+        case 'start':
+            //開始錄音
+            console.log("start record");
+            //alert("3");
+            this.setState({record_stste:1});
+        break;
+
+        case 'stop':
+            //停止錄音
+            console.log("stop record");
+              this.setState({record_stste:0});
+        break;
+
+        case 'close':
+          this.close();
         break;
         default:
           console.log("default");
