@@ -59,16 +59,10 @@ export default class Connection extends Component{
 
           <View style={{flex:8, alignItems:'flex-start',flexDirection:'row'} }>
               <View style={{flex:1}}>
-                  <Button type='solid' title="Recoder" buttonStyle={styles.button} onPress={()=>{
-                    this.props.navigation.navigate("Recordermode2");
-                    this.props.screenProps.ch_mode(2);
-                  }}/>
+                  <Button type='solid' title="Recorder" buttonStyle={styles.button} onPress={()=>this.props.navigation.navigate("Recordermode2")}/>
               </View>
               <View style={{flex:1}}>
-                  <Button type='solid' title="Master" buttonStyle={styles.button} onPress={()=>{
-                    this.props.navigation.navigate("Mastermode");
-                    this.props.screenProps.ch_mode(1);
-                  }}/>
+                  <Button type='solid' title="Master" buttonStyle={styles.button} onPress={()=>this.props.navigation.navigate("Mastermode")}/>
               </View>
 
 

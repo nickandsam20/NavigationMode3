@@ -69,7 +69,6 @@ width: 45
   buttonText: {
   color: '#000000',
   fontSize: 16,
-  fontWeight: 'bold',
 },
   footer:{
     backgroundColor: "#484848",
@@ -90,42 +89,59 @@ class Mastermode extends Component {
   constructor(props) {
       super(props);
       this.state = { iconName: logo, volumn: 0, record:start, onrecord: false,
-      connection:false, connectBtn:connected,
-      Track1on:false,Track2on:false,Track3on:false,
-      hearT1:false,hearT2:false,hearT3:false,
-      hearT1Btn:listen,hearT2Btn:listen,hearT3Btn:listen,
-      isPlaying:false
-    };
+        connection:false, connectBtn:connected,
+        Track1on:false,Track2on:false,Track3on:false,
+        hearT1:false,hearT2:false,hearT3:false,
+        hearT1Btn:listen,hearT2Btn:listen,hearT3Btn:listen,
+        isPlaying:false
+      };
       this.audioRecorderPlayer = new AudioRecorderPlayer();
-      this.onStartPlay=this. onStartPlay.bind(this);
-      this.onPausePlay=this. onPausePlay.bind(this);
+      this.handleHearT1 = this.handleHearT1.bind(this);
+  }
 
-    }
-
-
-  // onStartPlay() {
-  //    console.log('start-play');
-  // }
-  onStartPlay() {
+  onStartPlay = async () => {
       console.log('onStartPlay');
       const path = 'sdcard/Sample10.mp4';
-      this.audioRecorderPlayer.setVolume(1);
-      const msg = this.audioRecorderPlayer.startPlayer(path);
+      const msg = await this.audioRecorderPlayer.startPlayer(path);
       console.log(msg);
       this.setState({
           isPlaying: true
       });
+      this.audioRecorderPlayer.addPlayBackListener((e) => {
+        if (e.current_position === e.duration) {
+            console.log('finished');
+            this.audioRecorderPlayer.stopPlayer();
+        }
+        return;
+    });
   }
 
-  // onPausePlay() {
-  //    console.log('pause-play');
-  // }
-  onPausePlay() {
-    this.audioRecorderPlayer.pausePlayer();
+  onPausePlay = async () => {
+    await this.audioRecorderPlayer.pausePlayer();
     this.setState({
         isPlaying: false
     });
+  }
 
+  handleHearT1() {
+    if(this.state.hearT1) {
+      this.setState({
+        hearT1:false,
+        hearT1Btn:listen
+      })
+    }
+    else {
+      this.setState({
+        hearT1:true,
+        hearT1Btn:listenstop
+      });
+    }
+    if(this.state.isPlaying) {
+      this.onPausePlay();
+    }
+    else {
+      this.onStartPlay();
+    }
   }
 
   render() {
@@ -158,6 +174,7 @@ class Mastermode extends Component {
         }}>
           <Thumbnail square source={this.state.record} style={{marginBottom: 10,width:50}} />
         </Button>
+
     <View style={{flex: 4}}>
     <Text style ={{fontSize:50, color:'#ffff',bold:true,height:60}}>00:00:00</Text>
 
@@ -212,12 +229,7 @@ class Mastermode extends Component {
         /></View>
     <Button style={{margin:10,alignSelf: 'center'}}
           transparent
-          onPress={ (hearT1) =>{ this.state.hearT1 ? (this.setState({hearT1:false,hearT1Btn:listen})) : (this.setState({hearT1:true,hearT1Btn:listenstop}));
-
-          this.state.isPlaying ? this.onPausePlay() : this.onStartPlay();
-        }
-
-        }>
+          onPress={this.handleHearT1}>
           <Thumbnail square small source={this.state.hearT1Btn} style={{marginBottom: 10}} />
         </Button>
     </View>

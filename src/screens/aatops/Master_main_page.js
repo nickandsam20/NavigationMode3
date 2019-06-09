@@ -1,21 +1,9 @@
 import React ,{Component} from 'react';
 import {View,Text} from 'react-native';
 import { StyleSheet } from 'react-native';
-import { Image } from 'react-native-elements';
+import { Button,Image } from 'react-native-elements';
 import { ActivityIndicator } from 'react-native';
-
-import {
-  Header,
-  Icon,
-  Left,
-  Right,
-  Body,
-  Container,
-  Content,
-  Button,
-  Title,
-  Card, CardItem,
-} from "native-base";
+import { Container, Header, Content, Card, CardItem, Body ,Right,Icon} from 'native-base';
 import No_connected from './No_connected';
 import Card_list from './Card_list';
 const fontSize1=30;
@@ -68,39 +56,12 @@ export default class Master_main_page extends Component<Props>{
     ;
       return (
         <View style={styles.background_view}>
-        {
-          <Header style={styles.header}>
-          <Left>
-            <Button
-              transparent
-              onPress={() => this.props.navigation.openDrawer()}
-            >
-              <Icon name="menu" />
-            </Button>
-          </Left>
-          <Body>
-            <Title>Recorder</Title>
-          </Body>
-          <Right />
-        </Header>
-      }
-
-
-          <View style={{flexDirection:'row'}}>
-              <Text style={{fontSize:fontSize3,color:special_text_color}}>connection number:{this.props.screenProps.get_room()}</Text>
-            {
-            //   <Button  title="Recoder" onPress={()=>{
-            //       if(this.props.screenProps.mode==2)this.props.navigation.navigate("Recordermode2");
-            //       else this.props.navigation.navigate("MasterMode");
-            //   }}/>
-            }
-          </View>
-
+          <Text style={{fontSize:fontSize3,color:special_text_color}}>connection number:{this.props.screenProps.get_room()}</Text>
           <Card >
              <CardItem bordered >
                   <View style={{flex:1,backgroundColor:'',flexDirection:'row',justifyContent:'space-between'}}>
                       <View style={{alignSelf:'flex-start',backgroundColor:''}}><Text style={{fontSize:fontSize2}}>Master</Text></View>
-                      <View style={{alignSelf:'flex-end',backgroundColor:''}}><Text style={{fontSize:fontSize2}}>master</Text></View>
+                      <View style={{alignSelf:'flex-end',backgroundColor:''}}><Text style={{fontSize:fontSize2}}>master name</Text></View>
                   </View>
              </CardItem>
          </Card>
@@ -108,6 +69,12 @@ export default class Master_main_page extends Component<Props>{
         {info}
         {info2}
 
+        <Button onPress={()=>{
+          let msg={};
+          msg.event="device_join";
+          msg.data={user_name:"1",track:"1"};
+          this.props.screenProps.ws_fire_event(JSON.stringify(msg));
+        }}/>
         </View>
       );
   }

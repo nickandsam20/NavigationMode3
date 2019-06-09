@@ -32,15 +32,15 @@ export default class Master1 extends Component<Props>{
   }
   render(){
 //console.log("master1 props",this.props.screenProps);
-  //console.log(this.props);
+  console.log(this.props);
     return(
 
         <View style={styles.background_view}>
-            <KeyboardAvoidingView behavior=""  style={styles.form}>
+            <KeyboardAvoidingView behavior="height"  style={styles.form}>
                 <View style={{flex:2}}></View>
                 <View style={{backgroundColor:'',flex:2,alignItems:'center'}}>
-                    <Text style={{fontSize:fontSize1, color:styles.text.color,textAlign:"center"}}>First,</Text>
-                    <Text style={{fontSize:fontSize1,color:styles.text.color,textAlign:"center"}}>Create a connection number!</Text>
+                    <Text style={{fontSize:fontSize1, color:styles.text.color}}>First,</Text>
+                    <Text style={{fontSize:fontSize1 ,color:styles.text.color}}>Create a connection number!</Text>
 
                 </View>
 
@@ -70,14 +70,11 @@ export default class Master1 extends Component<Props>{
                 <View style={{flex:3}}>
                     <Button type='solid' title="Create" buttonStyle={styles.button} onPress={()=>{
                       //this.props.ch_page(2);
-                     this.props.screenProps.send({event:'create_room',user_name:'master',room:this.room_number});
+                     this.props.screenProps.send({event:'join_room',user_id:'master',room:this.room_number});
                      this.props.screenProps.set_room_number(this.room_number);
                       //this.props.ch_mode(2);
                       this.props.navigation.navigate("Master2")
                     }}/>
-                    <Button title="download "onPress={
-                      ()=>{this.props.screenProps.upload("ddd.jpg");}
-                    }/>
 
                 </View>
           </KeyboardAvoidingView>

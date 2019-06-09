@@ -11,9 +11,8 @@ import Master2 from "./screens/aatops/Master2";
 import Master_main_page from "./screens/aatops/Master_main_page";
 import Recordermode from "./screens/aatops/Recordermode";
 import Recordermode2 from "./screens/recordermode/RecorderMode";
-import Client_connect1 from "./screens/aatops/Client_connect1";
-import Client_connect_fail from "./screens/aatops/Client_connect_fail";
-import Client_connect_success from "./screens/aatops/Client_connect_success";
+
+import PlayMode from "./screens/aatops/PlayMode";
 
 import Header from "./screens/Header/";
 import Header1 from "./screens/Header/1";
@@ -159,7 +158,6 @@ export default class App extends Component<Props>{
           Recordermode2:{ screen: Recordermode2 },
           Master1: {screen: Master1},
           Top2: {screen: Top2},
-          Master_main_page:{screen:Master_main_page},
       //    Selection: { screen: Selection },
           Home: { screen: Home },
           Anatomy: { screen: Anatomy },
@@ -187,7 +185,9 @@ export default class App extends Component<Props>{
           NHToast: { screen: NHToast },
           Actionsheet: { screen: Actionsheet },
           NHAccordion: { screen: NHAccordion },
-          NHDatePicker: { screen: NHDatePicker }
+          NHDatePicker: { screen: NHDatePicker },
+
+          PlayMode: { screen: PlayMode }
         },
         {
           initialRouteName: "Recordermode2",
@@ -206,10 +206,6 @@ export default class App extends Component<Props>{
           Master1:{screen:Master1},
           Master2:{screen:Master2},
           Master_main_page:{screen:Master_main_page},
-          Client_connect1:{screen:Client_connect1},
-          Client_connect_fail:{screen:Client_connect_fail},
-          Client_connect_success:{screen:Client_connect_success},
-
 
           Header1: { screen: Header1 },
           Header2: { screen: Header2 },
@@ -332,7 +328,9 @@ export default class App extends Component<Props>{
           AccordionIcon: { screen: AccordionIcon },
           AccordionIconStyle: { screen: AccordionIconStyle },
           AccordionHeaderContentStyle: { screen: AccordionHeaderContentStyle },
-          AccordionCustomHeaderContent: { screen: AccordionCustomHeaderContent }
+          AccordionCustomHeaderContent: { screen: AccordionCustomHeaderContent },
+
+          PlayMode: { screen: PlayMode }
         },
         {
           initialRouteName: "Selection",

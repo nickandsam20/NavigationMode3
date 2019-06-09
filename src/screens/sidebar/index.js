@@ -29,14 +29,14 @@ class SideBar extends Component<Props> {
     this.datas = [
       {
         name: "Master Mode",
-        route: "Mastermode",  //要連到的mod
+        route: "Mastermode",
         iconimage: require("./assets/Menu/menu_master_w.png"),
         icon: "people",
         bg: "#C5F442"
       },
       {
         name: "Connection",
-        route: this.props.screenProps.room==-1?(this.props.screenProps.mode==1?"Master1":"Client_connect1"):"Master_main_page",
+        route: this.props.screenProps.mode==1?"Master1":"Master1",
         iconimage: require("./assets/Menu/connect_w.png"),
         icon: "people",
         bg: "#666666",
@@ -52,7 +52,7 @@ class SideBar extends Component<Props> {
       },
       {
         name: "Play",
-        route: "Recordermode2",
+        route: "PlayMode",
         iconimage: require("./assets/Menu/menu_play_w.png"),
         icon: "people",
         bg: "#666666",
@@ -60,13 +60,8 @@ class SideBar extends Component<Props> {
       }
 
     ];
-  };
-  componentWillReceiveProps(nextProps){
-  if(nextProps.screenProps.room!=this.props.screenProps.room){
-
-    this.datas[1].route=nextProps.screenProps.room==-1?(nextProps.screenProps.mode==1?"Master1":"Client_connect1"):"Master_main_page";
   }
-}
+
   render() {
     return (
       <Container>

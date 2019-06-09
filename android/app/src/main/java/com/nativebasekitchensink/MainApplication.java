@@ -4,7 +4,6 @@ import android.app.Application;
 
 import com.dooboolab.RNAudioRecorderPlayerPackage;
 import com.facebook.react.ReactApplication;
-import com.rnfs.RNFSPackage;
 import com.airbnb.android.react.lottie.LottiePackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
@@ -12,10 +11,9 @@ import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
-import com.rnfs.RNFSPackage;
+
 import java.util.Arrays;
 import java.util.List;
-
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -29,7 +27,6 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-            new RNFSPackage(),
             new RNAudioRecorderPlayerPackage(),
             new LottiePackage(),
             new VectorIconsPackage(),
@@ -54,6 +51,4 @@ public class MainApplication extends Application implements ReactApplication {
     super.onCreate();
     SoLoader.init(this, /* native exopackage */ false);
   }
-
-
 }

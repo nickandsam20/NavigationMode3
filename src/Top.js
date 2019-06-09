@@ -23,14 +23,8 @@ export default class Top extends Component<Props>{
       this.send=this.send.bind(this);
       this.device_join=this.device_join.bind(this);
       this.ws_fire_event=this.ws_fire_event.bind(this);
-      this.ch_name=this.ch_name.bind(this);
-      this.ch_recorder_name=this.ch_recorder_name.bind(this);
-      this.all_device_start_record=this.all_device_start_record.bind(this);
-      this.all_device_stop_record=this.all_device_stop_record.bind(this);
-      this.recorder_start=this.recorder_start.bind(this);
-      this.recorder_stop=this.recorder_stop.bind(this);
-      this.download=this.download.bind(this);
-      this.upload=this.upload.bind(this);
+
+
       this.connect=new Connection(this.ws_fire_event);
 
       let init_state={
@@ -42,8 +36,7 @@ export default class Top extends Component<Props>{
         connected_device:[
           // {
           //   user_name:'1',
-          //   track:1,
-          //    uid:...
+          //   track:1
           // },
           // {
           //   user_name:'2',
@@ -58,24 +51,35 @@ export default class Top extends Component<Props>{
         ch_mode:this.ch_mode,
         set_room_number:this.set_room_number,
         get_room:this.get_room,
+        //connected_device:this.state.connected_device,
+        //disconnected_device:this.state.disconnected_device,
+        //get_connected_device:this.get_connected_device,
+        //get_disconnected_device:this.get_disconnected_device,
+        //get_connected_device_cnt:this.get_connected_device_cnt,
+        //get_disconnected_device_cnt:this.get_disconnected_device_cnt,
         ws_fire_event:this.ws_fire_event,
         send:this.send,
-        ch_name:this.ch_name,
-
-        //master用這些條function來控制錄音開始/停止
-        all_start:this.all_device_start_record,//this.props.screenProps.all_start()
-        all_stop:this.all_device_stop_record, //this.props.screenProps.all_stop()
-        single_stop:this.single_stop,
-        single_start:this.single_start,
-        //下載檔案
-        download:this.download,
-        upload:this.upload,
-        record_stste:0,
+        //connected_device:this.state.connected_device,
+        //connected_device_cnt:this.state.connected_device_cnt
       };
 
 
       this.state=init_state;
-
+      // this.allProps={
+      //   ch_mode:this.ch_mode,
+      //   set_room_number:this.set_room_number,
+      //   get_room:this.get_room,
+      //   connected_device:this.state.connected_device,
+      //   disconnected_device:this.state.disconnected_device,
+      //   get_connected_device:this.get_connected_device,
+      //   get_disconnected_device:this.get_disconnected_device,
+      //   get_connected_device_cnt:this.get_connected_device_cnt,
+      //   get_disconnected_device_cnt:this.get_disconnected_device_cnt,
+      //   ws_fire_event:this.ws_fire_event,
+      //   send:this.send,
+      //   connected_device:this.state.connected_device,
+      //   connected_device_cnt:this.state.connected_device_cnt
+      // }
   }
 
   componentDidMount(){
@@ -91,60 +95,6 @@ export default class Top extends Component<Props>{
   //     this.setState({page:p});
   //     console.log("press");
   // }
-  upload(file_name){
-    this.connect.upload(file_name);
-  }
-  download(file_name){
-    this.connect.download(file_name);
-  }
-  recorder_start(uid){
-    if(this.state.room!=-1){
-      let msg={};
-      msg.event="single_start";
-      msg.data="start";
-      msg.room=this.state.room;
-      msg.uid=uid;
-      this.connect.send(msg);
-    }else alert("you must connect first");
-  }
-
-  recorder_stop(uid){
-    if(this.state.room!=-1){
-      let msg={};
-      msg.event="single_stop";
-      msg.data="stop";
-      msg.room=this.state.room;
-      msg.uid=uid;
-      this.connect.send(msg);
-    }else alert("you must connect first");
-  }
-
-  all_device_start_record(){
-    if(this.state.room!=-1){
-      let msg={};
-      msg.event="all_start";
-      msg.data="start";
-      msg.room=this.state.room;
-      this.connect.send(msg);
-      this.setState({record_stste:1});
-    }else alert("you must connect first");
-
-  }
-
-  all_device_stop_record(){
-    if(this.state.room!=-1){
-      let msg={};
-      msg.event="all_stop";
-      msg.data="stop";
-      msg.room=this.state.room;
-      this.connect.send(msg);
-      this.setState({record_stste:1});
-    }else alert("you must connect first");
-
-  }
-  ch_name(n){
-    this.setState({name:n});
-  }
   ws_fire_event(e){
       console.log("fire");
       let msg=JSON.parse(e);
@@ -153,50 +103,19 @@ export default class Top extends Component<Props>{
         case 'device_join':
               this.device_join(msg.data)
         break;
-
-        case 'ch_name':
-              this.ch_recorder_name(msg.uid,msg.new_name);
-        break;
-
-        case 'start':
-            //開始錄音
-            console.log("start record");
-            //alert("3");
-            this.setState({record_stste:1});
-        break;
-
-        case 'stop':
-            //停止錄音
-            console.log("stop record");
-              this.setState({record_stste:0});
-        break;
-
         default:
           console.log("default");
       }
       //this.device_join();
       //console.log(this.state);
   }
-  ch_recorder_name(uid,new_name){
-    this.setState((prevState)=>{
-          let tmp=prevState.connected_device;
-          tmp.forEach(d=>{
-              if(d.uid==uid){
-                d.user_name=new_name;
-                return false;
-              }
-          });
-          this.setState({connected_device:tmp});
-    })
-  }
   device_join(d){
       console.log("device join");
-      //console.log(d);
+
       this.setState({connected_device:[...this.state.connected_device,d],connected_device_cnt:this.state.connected_device_cnt+1});
       //else this.setState({connected_device:[d],connected_device_cnt:this.state.connected_device_cnt+1});
 
   }
-
   send(msg){
     this.connect.send(msg);
   }
@@ -216,7 +135,7 @@ export default class Top extends Component<Props>{
 
   ch_mode(m){
       this.setState({mode:m});
-      console.log("ch_mode ",m);
+      console.log("ch_mode")
   }
   set_room_number(n){
     this.setState({room:n});

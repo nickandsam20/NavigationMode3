@@ -35,7 +35,7 @@ export default class Client_connect1 extends Component<Props>{
     return(
 
         <View style={styles.background_view}>
-            <KeyboardAvoidingView behavior=""  style={styles.form}>
+            <KeyboardAvoidingView behavior="height"  style={styles.form}>
                 <View style={{flex:2}}></View>
                 <View style={{backgroundColor:'',flex:2,alignItems:'center'}}>
                     <Text style={{fontSize:fontSize1, color:styles.text.color, textAlign:'center'}}>Enter the connection number from master</Text>
@@ -67,8 +67,8 @@ export default class Client_connect1 extends Component<Props>{
                 <View style={{flex:3 }}>
                     <Button type='solid' title="Create" buttonStyle={styles.button} onPress={()=>{
                       //this.props.ch_page(2);
-                     this.props.screenProps.send({event:'join_room',user_id:'recorder',room:this.room_number});
-                     this.props.screenProps.set_room_number(this.room_number);
+                    // this.props.screenProps.send({event:'join_room',user_id:'master',room:this.room_number});
+                     //this.props.screenProps.set_room_number(this.room_number);
                       //this.props.ch_mode(2);
                       this.props.navigation.navigate("Client_connect_success")
                     }}/>
