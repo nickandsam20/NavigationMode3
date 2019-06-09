@@ -37,6 +37,8 @@ export default class PlayMode extends React.Component {
         
         this.callPlay = this.callPlay.bind(this);
         this.deleteFile = this.deleteFile.bind(this);
+        this.rerender = this.rerender.bind(this);
+        this.getNewName = this.getNewName.bind(this);
     }
 
     componentDidMount() {
@@ -61,6 +63,46 @@ export default class PlayMode extends React.Component {
         });
     }
 
+    async getNewName(newFilename, oldFileName) {
+        console.log(newFilename, oldFileName);
+        var newItems = [];
+        //var newItems_ = [];
+        await AsyncStorage.getItem('fileList').then(value => {
+            newItems = JSON.parse(value);
+        });
+        newItems = newItems.map((event) => {
+            event = event === oldFileName ? newFilename : event;
+            return event;
+        });
+        AsyncStorage.setItem('fileList', JSON.stringify(newItems));
+        //this.rerender();
+        this.setState({
+            dataSource: ds.cloneWithRows(newItems)
+        });
+        console.log("HERE");
+
+        // if(this.state.fileChoose === filename){
+        //     this.setState({
+        //         fileChoose: '',
+        //         isChosen: false
+        //     });
+        // }
+    }
+
+    async rerender() {
+        console.log("HERE%");
+        var newItems = [];
+        //var newItems_ = [];
+        await AsyncStorage.getItem('fileList').then(value => {
+            newItems = JSON.parse(value);
+        });
+        console.log(newItems);
+        this.setState({
+            dataSource: ds.cloneWithRows(newItems)
+        });
+        console.log("HERE3");
+    }
+
     async deleteFile(filename) {
         var items = [];
         await AsyncStorage.getItem('fileList').then(value => {
@@ -73,7 +115,7 @@ export default class PlayMode extends React.Component {
         this.setState({
             dataSource: ds.cloneWithRows(items)
         });
-
+        console.log("HERE2");
         if(this.state.fileChoose === filename){
             this.setState({
                 fileChoose: '',
@@ -87,14 +129,15 @@ export default class PlayMode extends React.Component {
             <Container>
                 <Header style={styles.header}>
                     <Left>
-                        <Button
-                            transparent
-                            onPress={() => this.props.navigation.openDrawer()}>
-                            <Icon name="menu" />
-                        </Button>
+                    <Button
+                        transparent
+                        onPress={() => this.props.navigation.openDrawer()}
+                    >
+                        <Icon name="menu" />
+                    </Button>
                     </Left>
                     <Body>
-                        <Title>PlayMode</Title>
+                    <Title>Play</Title>
                     </Body>
                     <Right />
                 </Header>
@@ -106,7 +149,8 @@ export default class PlayMode extends React.Component {
                         <ListView
                             dataSource={this.state.dataSource}
                             renderRow={(rowData) => {
-                                return <FileItem filename={rowData} callPlay={this.callPlay} deleteSelf={this.deleteFile}/>;
+                                return <FileItem filename={rowData} callPlay={this.callPlay} 
+                                deleteSelf={this.deleteFile} getNewName={this.getNewName}/>;
                             }}
                         />
                     </View>
