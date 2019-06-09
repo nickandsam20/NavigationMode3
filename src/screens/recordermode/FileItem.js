@@ -22,13 +22,15 @@ import {
 const Item = Picker.Item;
 
 import AudioRecorderPlayer from 'react-native-audio-recorder-player';
+
 const onplayBtn = require("./assets/Play/play.png");
 const offplayBtn = require("./assets/Play/pause.png");
 
 export default class FileItem extends React.Component {
 
     static propTypes = {
-        filename: PropTypes.string.isRequired
+        filename: PropTypes.string.isRequired,
+        deleteFile: PropTypes.func.isRequired
     };
 
     constructor(props) {
@@ -38,11 +40,11 @@ export default class FileItem extends React.Component {
             currentDurationSec: 0,
             playTime: '00:00:00',
             duration: '00:00:00',
-            isPlaying: false,
-            selected1: "key1",
+            isPlaying: false
         };
 
         this.audioRecorderPlayer = new AudioRecorderPlayer();
+        this.handleDelete = this.handleDelete.bind(this);
     }
 
     onStartPlay = async () => {
@@ -56,7 +58,7 @@ export default class FileItem extends React.Component {
         this.audioRecorderPlayer.addPlayBackListener((e) => {
             if (e.current_position === e.duration) {
                 console.log('finished');
-                this.audioRecorderPlayer.stopPlayer();
+                this.onStopPlay();
             }
             this.setState({
                 currentPositionSec: e.current_position,
@@ -84,10 +86,10 @@ export default class FileItem extends React.Component {
         });
     }
 
-    onValueChange(value: string) {
-    this.setState({
-      selected1: value
-    });
+    handleDelete() {
+        this.audioRecorderPlayer.stopPlayer();
+        this.audioRecorderPlayer.removePlayBackListener();
+        this.props.deleteFile(this.props.filename);
     }
 
     render() {
@@ -112,7 +114,7 @@ export default class FileItem extends React.Component {
 
                     </Button >
 
-                  <Button transparent style={{smarginHorizontal:10,marginRight:10,marginLeft:10} }>
+                  <Button transparent style={{smarginHorizontal:10,marginRight:10,marginLeft:10}}  onPress={this.handleDelete}>
                       <Image style={{width:20, height:20}}  source={require("./assets/Play/delete.png")}/>
 
                   </Button >
@@ -146,9 +148,5 @@ const styles = StyleSheet.create({
     textinfo: {
         color: '#212121',
         fontSize: 13
-    },
-
-    optionButton: {
-
     }
 });

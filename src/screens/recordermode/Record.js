@@ -12,17 +12,8 @@ import {
 import {
   Thumbnail,
   Container,
-  Header,
-  Title,
   Text,
-  Content,
   Button,
-  Icon,
-  Badge,
-  Left,
-  Right,
-  Body,
-  Footer,
   Item,
   Input
 } from "native-base";
@@ -45,6 +36,7 @@ export default class Record extends React.Component {
             recordSecs: 0,
             recordTime: '00:00:00',
             filename: 'Recording #',
+            title: 'Recording #',
             nameCount: 1,
             isRecording: false,
             recordBtn:startButton,
@@ -61,13 +53,15 @@ export default class Record extends React.Component {
             if(JSON.parse(value)) {
                 this.setState({
                     nameCount: JSON.parse(value),
-                    filename: 'Recording #' + JSON.parse(value)
+                    filename: 'Recording #' + JSON.parse(value),
+                    title: 'Recording #' + JSON.parse(value)
                 });
             }
             else{
                 this.setState({
                     nameCount: 1,
-                    filename: 'Recording #1'
+                    filename: 'Recording #1',
+                    title: 'Recording #1'
                 });
             }
         });
@@ -120,7 +114,7 @@ export default class Record extends React.Component {
             }
         }
 
-        const path = 'sdcard/' + this.state.filename + '.mp3';
+        const path = 'sdcard/' + this.state.filename + '.mp4';
         const result = await this.audioRecorderPlayer.startRecorder(path);
         this.setState({
             isRecording: true,
@@ -144,13 +138,13 @@ export default class Record extends React.Component {
         this.setState({
             recordSecs: 0,
             isRecording: false,
-            recordBtn:startButton,
-            filename:this.state.title
+            recordBtn: startButton,
         });
         this.props.addNewFile(this.state.filename);
         this.setState((prevState, props) => ({
             nameCount: prevState.nameCount + 1,
-            filename: 'Recording #' + (prevState.nameCount + 1)
+            filename: 'Recording #' + (prevState.nameCount + 1),
+            title: 'Recording #' + (prevState.nameCount + 1)
         }));
         console.log(result);
 
@@ -171,17 +165,17 @@ export default class Record extends React.Component {
         return (
             <Container style={styles.container}>
                 <View style={styles.time}>
-                      <Text style ={{fontSize:50, color:'#ffff',bold:true,height:60}}>{ this.state.recordTime }</Text>
+                      <Text style ={{fontSize:50, color:'#ffff',height:60}}>{ this.state.recordTime }</Text>
                 </View>
 
                 <View style={styles.text}>
                       <Item style={styles.name}>
-                         <Input placeholder={ this.state.filename }
-                                onChangeText={val => this.setState({title:val})}
+                         <Input placeholder={ this.state.title }
+                                onChangeText={val => this.setState({ filename: val })}
                                 style={styles.input}/>
 
                       </Item>
-                      <Text style ={{fontSize:16,color:'#ffff',bold:true,justifyContent:'center',alignItems: 'center'}}>ready to start</Text>
+                      <Text style ={{fontSize:16,color:'#ffff',justifyContent:'center',alignItems: 'center'}}>ready to start</Text>
                 </View>
 
                 <View style={styles.buttomRow}>

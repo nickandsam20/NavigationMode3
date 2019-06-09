@@ -52,7 +52,7 @@ class SideBar extends Component<Props> {
       },
       {
         name: "Play",
-        route: "Recordermode2",
+        route: "PlayMode",
         iconimage: require("./assets/Menu/menu_play_w.png"),
         icon: "people",
         bg: "#666666",

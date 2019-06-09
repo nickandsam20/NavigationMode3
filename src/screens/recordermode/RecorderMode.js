@@ -69,6 +69,7 @@ export default class RecorderMode extends React.Component {
         this.recordPress = this.recordPress.bind(this);
         this.playPress = this.playPress.bind(this);
         this.addNewFile = this.addNewFile.bind(this);
+        this.deleteExistedFile = this.deleteExistedFile.bind(this);
     }
 
     componentDidMount() {
@@ -106,9 +107,18 @@ export default class RecorderMode extends React.Component {
         this.setState((prevState, props) => ({
             fileList: [...prevState.fileList, filename]
         }));
-        AsyncStorage.setItem('fileList', JSON.stringify(this.state.fileList)); }
+        AsyncStorage.setItem('fileList', JSON.stringify(this.state.fileList));
+    }
 
-
+    deleteExistedFile(filename) {
+        var items = this.state.fileList.filter(function(element) {
+            return element !== filename;
+        });
+        AsyncStorage.setItem('fileList', JSON.stringify(items));
+        this.setState({
+            fileList: items
+        });
+    }
 
     render() {
         return (
@@ -149,7 +159,7 @@ export default class RecorderMode extends React.Component {
                 {
                     this.state.isRecord ?
                     <Record addNewFile={this.addNewFile} /> :
-                    <Play fileList={this.state.fileList} />
+                    <Play fileList={this.state.fileList} fileItemDelete={this.deleteExistedFile} />
                 }
 
           </Content>
