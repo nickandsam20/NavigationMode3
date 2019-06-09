@@ -1,5 +1,5 @@
 import * as RNFS from 'react-native-fs';
-
+import axios from 'axios';
 export default class Connection{
 
       constructor(fire){
@@ -24,7 +24,7 @@ export default class Connection{
 
       }
       close(){
-        this.ws.close();
+        //this.ws.close();
       }
 
       send(e){
@@ -33,11 +33,12 @@ export default class Connection{
       }
 
       download(file_name){
-            RNFS.mkdir(RNFS.ExternalDirectoryPath+'/download').then(()=>{
+            RNFS.mkdir(RNFS.DocumentDirectoryPath+'/download').then(()=>{
               console.log("create folder");
               RNFS.downloadFile({
-                   fromUrl: 'http://10.0.2.2:5000/'+file_name,
-                   toFile: `${RNFS.ExternalDirectoryPath}/download/${file_name}`,
+                   //fromUrl: 'http://192.168.191.81:5000/'+file_name,
+                   fromUrl:'http://10.0.2.2:5000/'+file_name,
+                   toFile: `${RNFS.DocumentDirectoryPath}/download/${file_name}`,
                    //headers
 
                    begin: (res: DownloadBeginCallbackResult) => {
@@ -64,7 +65,7 @@ export default class Connection{
 
 
       upload(file_name){
-        console.log(RNFS.ExternalDirectoryPath+"/download/ddd.jpg");
+      //  console.log(RNFS.ExternalDirectoryPath+"/download/demo1.png");
 
         // FileTransfer.upload({
         //   uri: uri,
@@ -122,34 +123,61 @@ export default class Connection{
 
 
 
-            console.log("here");
-            let url="https://192.168.191.81:5000/upload";
-            console.log(url);
-          uploadAudio = async () => {
-             const path = RNFS.ExternalDirectoryPath+"/download/ddd.jpg";
-               const formData = new FormData()
-               formData.append('file', {
-                 uri: path,
-                 name: 'ddd.jpg',
-                 type: 'image/jpeg',
-               })
-               try {
-                 const res = await fetch(url, {
-                   method: 'POST',
-                   headers: {
-                     'Content-Type': 'multipart/form-data',
-                     "Connection": "close",
-                   },
-                   body: formData,
-                 })
-                 const json = await res.json()
-               } catch (err) {
-                 alert(err)
-               }
-           }
+          //   console.log("here");
+          //   let url="http://10.0.2.2:5000/upload";
+          //   console.log(url);
+          // uploadAudio = async () => {
+          //    const path = RNFS.ExternalDirectoryPath+"/download/ddd.jpg";
+          //      const formData = new FormData()
+          //      formData.append('file', {
+          //        uri: path,
+          //        name: 'ddd.jpg',
+          //        type: 'image/jpeg',
+          //      })
+          //      try {
+          //        const res = await fetch(url, {
+          //          method: 'POST',
+          //          headers: {
+          //            'Content-Type': 'multipart/form-data',
+          //            "Connection": "close",
+          //          },
+          //          body: formData,
+          //        })
+          //        const json = await res.json()
+          //      } catch (err) {
+          //        alert(err)
+          //      }
+          //  }
+          //
+          // uploadAudio();
 
-          uploadAudio();
+           const path = "file://"+RNFS.DocumentDirectoryPath+"/download/ddd.jpg";
+           RNFS.readdir(RNFS.DocumentDirectoryPath+"/download").then((s)=>{
+             console.log(s);
+           })
+           RNFS.readDir(RNFS.DocumentDirectoryPath+"/download").then((s)=>{
+             console.log(s);
+           })
+           console.log(path);
+          const formData = new FormData()
+          formData.append('formdata', {
+            uri: path,
+            name: 'ddd.jpg',
+            type: 'image/jpeg',
+          })
+            //console.log(fff);
 
+          axios({
+            method: 'post',
+            url: 'http://10.0.2.2:5000/upload',
+            headers: {
+
+            },
+            body:formData
+          }).then((response) => {
+            console.log(response)
+          })
+         axios.post('http://10.0.2.2:5000/upload', formData)
 
       }
 }

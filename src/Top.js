@@ -32,9 +32,10 @@ export default class Top extends Component<Props>{
       this.download=this.download.bind(this);
       this.upload=this.upload.bind(this);
       this.all_close=this.all_close.bind(this);
+      this.close=this.close.bind(this);
       this.connect=new Connection(this.ws_fire_event);
 
-      let init_state={
+       this.init_state={
         mode:0, //0為未選擇 1為recoder 2為master
         room:-1,//-1為未選擇
         name:"user",
@@ -72,11 +73,12 @@ export default class Top extends Component<Props>{
         download:this.download,
         upload:this.upload,
         record_state:0,
-        all_close:this.all_close
+        all_close:this.all_close,
+        close:this.close
       };
 
 
-      this.state=init_state;
+      this.state=this.init_state;
 
   }
 
@@ -93,11 +95,18 @@ export default class Top extends Component<Props>{
   //     this.setState({page:p});
   //     console.log("press");
   // }
+  close(){
+    let msg={};
+    msg.event="close";
+    this.connect.send(msg);
+    this.setState(this.init_state);
+
+  }
   all_close(){
-    let msg;
+    let msg={};
     msg.event="all_close";
     msg.room=this.state.room;
-    this.setState({room:-1});
+    this.setState(this.init_state);
     this.connect.send(msg);
   }
   upload(file_name){
@@ -184,9 +193,29 @@ export default class Top extends Component<Props>{
               this.setState({record_state:0});
         break;
 
-        case 'close':
-          this.close();
+        case 'all_close':
+          this.setState(this.init_state);
         break;
+
+        case 'device_leave':
+          //alert(msg.uid+" leave");
+            let index=-1;
+            let i=0;
+            // this.state.connected_device.forEach(d=>{
+            //     if(d.uid==msg.uid)index=i;
+            //     else i++;
+            // })
+            // if(index>=0)this.setState({connected_device:this.state.connected_device.slice(index,1),connected_device_cnt:this.state.connected_device_cnt-1})
+
+            let remain=[];
+            let off=[];
+            this.state.connected_device.forEach(d=>{
+                if(d.uid==msg.uid)off.push(d);
+                else remain.push(d);
+            })
+          this.setState({connected_device:remain, connected_device_cnt:this.state.connected_device_cnt-1, disconnected_device:off, disconnected_device_cnt:this.state.disconnected_device_cnt+1})
+        break;
+
         default:
           console.log("default");
       }
@@ -208,7 +237,13 @@ export default class Top extends Component<Props>{
   device_join(d){
       console.log("device join");
       //console.log(d);
-      this.setState({connected_device:[...this.state.connected_device,d],connected_device_cnt:this.state.connected_device_cnt+1});
+      let n=[];
+      let cnt=0;
+      this.state.disconnected_device.forEach(dd=>{
+          if(dd.uid!=d.uid)n.push(dd);
+          else cnt++;
+      })
+      this.setState({connected_device:[...this.state.connected_device,d],connected_device_cnt:this.state.connected_device_cnt+1, disconnected_device:n, disconnected_device_cnt:this.state.disconnected_device_cnt-cnt});
       //else this.setState({connected_device:[d],connected_device_cnt:this.state.connected_device_cnt+1});
 
   }

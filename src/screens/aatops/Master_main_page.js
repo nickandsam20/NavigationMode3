@@ -86,7 +86,20 @@ export default class Master_main_page extends Component<Props>{
             <Title>Connection</Title>
           </Body>
 
-          <Right><Button transparent ><Thumbnail
+          <Right><Button transparent
+          onPress={()=>{
+            if(this.props.screenProps.mode==1){
+                this.props.screenProps.all_close();
+                console.log("go ot main page");
+                this.props.navigation.navigate("Mastermode");
+              }
+            else {
+                this.props.screenProps.close();
+                console.log("go ot recorder");
+                this.props.navigation.navigate("Recordermode2");
+              }
+          }}
+          ><Thumbnail
            square small source={require("../../../assets/Connection/delete.png")}
             style={{ width: 30, height:30}} />
             </Button></Right>

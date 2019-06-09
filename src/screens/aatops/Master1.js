@@ -79,9 +79,11 @@ export default class Master1 extends Component<Props>{
                       //this.props.ch_mode(2);
                       this.props.navigation.navigate("Master2")
                     }}/>
-                    <Button title="download "onPress={
-                      ()=>{this.props.screenProps.upload("demo1.png");}
-                    }/>
+                    {
+                      // <Button title="download "onPress={
+                      //   ()=>{this.props.screenProps.upload("ddd.jpg");}
+                      // }/>
+                    }
 
                 </View>
           </KeyboardAvoidingView>
