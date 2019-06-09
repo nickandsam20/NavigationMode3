@@ -2,6 +2,9 @@ import React ,{Component} from 'react';
 import {View,Text,TextInput} from 'react-native';
 import { StyleSheet } from 'react-native';
 import { Button,Image } from 'react-native-elements';
+import Animation from 'lottie-react-native';
+import LottieView from 'lottie-react-native';
+
 const fontSize1=30;
 const fontSize1_5=25;
 const fontSize2=15;
@@ -26,22 +29,42 @@ export default class Master2 extends Component<Props>{
   constructor(props){
     super(props);
   }
+  componentDidMount() {
+        this.initAnimation();
+    }
+    initAnimation(){
+      if (!this.animation){
+        setTimeout(() => {
+          this.initAnimation();
+        }, 100);
+      } else {
+          this.animation.play();
+      }
+    }
+
   render(){
     return(
 
         <View style={styles.background_view}>
 
-                <View style={{flex:2}}></View>
-                <View style={{backgroundColor:'',flex:2,alignItems:'center'}}>
-                    <Text style={{fontSize:28,fontWeight: 'bold', color:styles.text.color}}>Create Successfully</Text>
+                <View style={{flex:1}}></View>
+                <View style={{flex:2,justifyContent:'flex-end',alignItems: 'center'}}>
+                    <Text style={{fontSize:28,fontWeight: 'bold', color:styles.text.color}}>Create Successfully!</Text>
                 </View>
 
-                <View style={{backgroundColor:'',flex:3,alignItems:'center'}}>
+                <View style={{flex:4,alignItems:'center'}}>
 
-                  <Image
-                    source={require('./images/success.png')}
-                    style={{ width: 120, height:120 }}
-                  />
+                  <Animation
+                ref={animation => { this.animation = animation; }}
+                loop={true}
+                style={{
+                  width: 200,
+                  height: 200,
+                  marginButton:60,
+                  flexDirection: 'row'
+                }}
+                source={require('./images/success.json')}
+              />
                   <Text style={{fontSize:fontSize1,color:special_text_color}}>{this.props.room}</Text>
                 </View>
 
@@ -59,16 +82,7 @@ export default class Master2 extends Component<Props>{
                     //  console.log("press");
                       this.props.navigation.navigate("Master_main_page");
                     }}/>
-                    <Button  type='solid' title="send" style={{backgroundColor:'red'}} onPress={()=>{
-                      let msg={};
-                      // msg.event="device_join";
-                      // msg.data={user_name:"1",track:"1"};
-                      // this.props.screenProps.ws_fire_event(JSON.stringify(msg));
-                      if(this.props.screenProps.mode==1){
-                        if(this.props.screenProps.record_stste==0)this.props.screenProps.all_start();
-                        else this.props.screenProps.all_stop();
-                      }
-                    }}/>
+
                 </View>
 
         </View>

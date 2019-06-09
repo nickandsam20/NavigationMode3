@@ -4,7 +4,7 @@ import DialogInput from 'react-native-dialog-input';
 
 import {
     View,
-    StyleSheet, 
+    StyleSheet,
     Text,
     TextInput,
     Image,
@@ -61,7 +61,7 @@ export default class FileItem extends React.Component {
             isDialogVisible: false
         })
     }
-    
+
     sendInput(inputText) {
         this.setState({
             isDialogVisible: false
@@ -73,7 +73,7 @@ export default class FileItem extends React.Component {
     render() {
         return (
             <View style={styles.root}>
-                <TouchableOpacity 
+                <TouchableOpacity
                     style={styles.playButton}
                     onPress={this.chooseFile}>
                     <Text style={styles.fileInfo}>{ this.props.filename }</Text>
@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#666666',
         flexDirection: 'row',
-        marginVertical: 4,
+        marginBottom: 1,
         paddingVertical: 8
     },
     playButton: {
