@@ -1,7 +1,8 @@
 import React ,{Component} from 'react';
 import {View,Text,TextInput,KeyboardAvoidingView} from 'react-native';
-import { StyleSheet } from 'react-native';
+import { StyleSheet,Item,Input } from 'react-native';
 import { Button,Image } from 'react-native-elements';
+
 const fontSize1=30;
 const fontSize2=15;
 const input_text_color='#33d9e1'
@@ -12,7 +13,7 @@ const styles=StyleSheet.create({
     },
     button:{
       backgroundColor:'#7b7b7b',
-      width:'60%',
+      width:'40%',
       height:'60%',
       alignSelf:'center'
 
@@ -23,7 +24,8 @@ const styles=StyleSheet.create({
     form: {
       flex: 1,
       justifyContent: 'space-between',
-    }
+    },
+
 });
 export default class Master1 extends Component<Props>{
   constructor(props){
@@ -39,8 +41,8 @@ export default class Master1 extends Component<Props>{
             <KeyboardAvoidingView behavior=""  style={styles.form}>
                 <View style={{flex:2}}></View>
                 <View style={{backgroundColor:'',flex:2,alignItems:'center'}}>
-                    <Text style={{fontSize:fontSize1, color:styles.text.color,textAlign:"center"}}>First,</Text>
-                    <Text style={{fontSize:fontSize1,color:styles.text.color,textAlign:"center"}}>Create a connection number!</Text>
+                    <Text style={{fontSize:28,fontWeight: 'bold',color:styles.text.color,textAlign:"center"}}>First,</Text>
+                    <Text style={{fontSize:24, fontWeight: 'bold',color:styles.text.color,textAlign:"center"}}>create a connection number!</Text>
 
                 </View>
 
@@ -55,16 +57,18 @@ export default class Master1 extends Component<Props>{
 
                 </View>
 
-                <View style={{backgroundColor:'',flex:3,alignSelf:'center',alignItems:'flex-start',flexDirection:'row'}}>
-                    <Text style={{fontSize:fontSize1,color:styles.text.color}}>Enter Here:</Text>
+                <View style={{flex:3,alignSelf:'center',alignItems:'center',paddingBottom: 30,flexDirection:'row'}}>
+                    <Text style={{fontSize:24,fontWeight: 'bold',color:styles.text.color,marginRight: 5}}>Enter Here:</Text>
+                    <View style={{width:60}}>
                     <TextInput
+                         placeholder="####"
                          keyboardType='numeric'
                          autoFocur='true'
-                         underlineColorAndroid={input_text_color}
-                         style={{color:input_text_color,fontSize:fontSize1}}
+                         underlineColorAndroid='#33d9e1'
+                         style={{fontSize:22, color:'#33d9e1',height:45}}
                          maxLength={4}  //setting limit of input
                          onChangeText={n=>{this.room_number=n;}}
-                    />
+                    /></View>
                 </View>
 
                 <View style={{flex:3}}>
@@ -81,6 +85,7 @@ export default class Master1 extends Component<Props>{
 
                 </View>
           </KeyboardAvoidingView>
+
         </View>
 
     );

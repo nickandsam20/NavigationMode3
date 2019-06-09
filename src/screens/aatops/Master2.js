@@ -13,7 +13,7 @@ const styles=StyleSheet.create({
     },
     button:{
       backgroundColor:'#7b7b7b',
-      width:'60%',
+      width:'40%',
       height:'60%',
       alignSelf:'center'
 
@@ -33,14 +33,14 @@ export default class Master2 extends Component<Props>{
 
                 <View style={{flex:2}}></View>
                 <View style={{backgroundColor:'',flex:2,alignItems:'center'}}>
-                    <Text style={{fontSize:fontSize1, color:styles.text.color}}>Create Sucessfully!!</Text>
+                    <Text style={{fontSize:28,fontWeight: 'bold', color:styles.text.color}}>Create Successfully</Text>
                 </View>
 
                 <View style={{backgroundColor:'',flex:3,alignItems:'center'}}>
 
                   <Image
-                    source={require('./images/check.png')}
-                    style={{ width: 100, height:100 }}
+                    source={require('./images/success.png')}
+                    style={{ width: 120, height:120 }}
                   />
                   <Text style={{fontSize:fontSize1,color:special_text_color}}>{this.props.room}</Text>
                 </View>
@@ -49,8 +49,9 @@ export default class Master2 extends Component<Props>{
 
                 <View style={{backgroundColor:'',flex:3,flexDirection:'column',alignSelf:'center',alignItems:'center'}}>
 
-                    <Text style={{fontSize:fontSize1_5,color:styles.text.color,textAlign:'center'}}>Now, let recoders enter the number to conneect with you</Text>
-
+                    <Text style={{fontSize:20, fontWeight: 'bold',color:styles.text.color,textAlign:'center'}}>Now let recorders enter the number
+                    </Text>
+                    <Text style={{fontSize:20, fontWeight: 'bold',color:styles.text.color,textAlign:'center'}}>to conneect with you!!</Text>
                 </View>
                 <View style={{flex:3}}>
                     <Button type='solid' title="OK" buttonStyle={styles.button} onPress={()=>{

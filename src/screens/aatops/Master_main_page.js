@@ -1,7 +1,7 @@
 import React ,{Component} from 'react';
 import {View,Text} from 'react-native';
 import { StyleSheet } from 'react-native';
-import { Image } from 'react-native-elements';
+import { Image} from 'react-native-elements';
 import { ActivityIndicator } from 'react-native';
 
 import {
@@ -15,6 +15,7 @@ import {
   Button,
   Title,
   Card, CardItem,
+  Thumbnail
 } from "native-base";
 import No_connected from './No_connected';
 import Card_list from './Card_list';
@@ -26,6 +27,9 @@ const styles=StyleSheet.create({
     background_view:{
       backgroundColor:'#484848',
       flex:1
+    },
+    header: {
+      backgroundColor: "#212121",
     },
     button:{
       backgroundColor:'#7b7b7b',
@@ -79,9 +83,13 @@ export default class Master_main_page extends Component<Props>{
             </Button>
           </Left>
           <Body>
-            <Title>Recorder</Title>
+            <Title>Connection</Title>
           </Body>
-          <Right />
+
+          <Right><Button transparent ><Thumbnail
+           square small source={require("../../../assets/Connection/delete.png")}
+            style={{ width: 30, height:30}} />
+            </Button></Right>
         </Header>
       }
 

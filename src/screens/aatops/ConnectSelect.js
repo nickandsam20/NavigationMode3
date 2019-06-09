@@ -66,13 +66,28 @@ export default class Connection extends Component{
       return(
 
         <Container style={styles.container}>
-
+                <Header style={styles.header}>
+                  <Left>
+                    <Button
+                      transparent
+                      onPress={() => this.props.navigation.openDrawer()}
+                    >
+                      <Icon name="menu" />
+                    </Button>
+                  </Left>
+                  <Body>
+                    <Title>Connection</Title>
+                  </Body>
+                  <Right />
+                </Header>
 
             <View padder style={styles.content}>
 
-                <View style={{flex:3,justifyContent: 'center',alignSelf: 'center',paddingLeft: 30}}>
-                    <Text style={{fontWeight: 'bold', fontSize: 36, height:40, color:'white',alignItems:  'flex-start'}}>RECmote</Text>
-                    <Text style={{fontWeight: 'bold',fontSize:18, color:'white',alignItems: 'flex-start'}}>Your powerful voice recorder</Text>
+                <View style={{flex:3,justifyContent: 'center',alignItems: 'center'}}>
+                    <Text style={{fontWeight: 'bold', fontSize: 36, color:'white'}}>Connection</Text>
+                    <Text style={{fontWeight: 'bold',fontSize:18, color:'white',height:20}}>Use a set of numbers to</Text>
+                    <Text style={{fontWeight: 'bold',fontSize:18, color:'white'}}>
+                                    connect Mater with Recorders!!</Text>
                 </View>
                 <View style={{flex:1,alignItems :'center',justifyContent: 'center'}}>
                     <Text style={{fontSize:30 ,color:styles.text.color,justifyContent: 'center'}}>You are</Text>
@@ -84,8 +99,8 @@ export default class Connection extends Component{
 
                 <View>
                     <Button transparent onPress={()=>{
-                      this.props.navigation.navigate("Mastermode");
-
+                      this.props.navigation.navigate("Master1");
+                      this.props.screenProps.ch_mode(1);
                     }}><Image
                       source={require('./images/control2.png')}
                       style={{ width: 80, height:80}}/>
@@ -103,8 +118,8 @@ export default class Connection extends Component{
 
               <View>
                   <Button transparent onPress={()=>{
-                  this.props.navigation.navigate("Recordermode2");
-
+                  this.props.navigation.navigate("Client_connect1");
+                  this.props.screenProps.ch_mode(2);
                 }}><Image
                   source={require('./images/recorder2.png')}
                   style={{ width: 80, height: 80}} />
@@ -125,7 +140,7 @@ export default class Connection extends Component{
               <Button transparent onPress={()=>{
                 this.props.navigation.navigate("Mastermode");
                 }}>
-              <Text style={styles.underline}>Choose later</Text>
+              <Text style={styles.underline}></Text>
               </Button>
               </View>
 

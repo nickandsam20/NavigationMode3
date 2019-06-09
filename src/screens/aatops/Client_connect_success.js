@@ -12,7 +12,7 @@ const styles=StyleSheet.create({
     },
     button:{
       backgroundColor:'#7b7b7b',
-      width:'60%',
+      width:'40%',
       height:'60%',
       alignSelf:'center'
 
@@ -38,11 +38,11 @@ export default class Client_connect_success extends Component<Props>{
             <KeyboardAvoidingView behavior=""  style={styles.form}>
                 <View style={{flex:2}}></View>
                 <View style={{backgroundColor:'',flex:2,alignItems:'center'}}>
-                    <Text style={{fontSize:fontSize1, color:styles.text.color, textAlign:'center'}}>Connect Successfully!!</Text>
+                    <Text style={{fontSize:24, fontWeight: 'bold', color:styles.text.color, textAlign:'center'}}>Connect Successfully!!</Text>
                 </View>
 
-                <View style={{backgroundColor:'',flex:3,alignItems:'center'}}>
-                    <View style={{flex:1}}></View>
+                <View style={{flex:3,alignItems:'center'}}>
+
                     <View style={{flex:6}}>
                         <Image
                           source={require('./images/link.png')}
@@ -53,21 +53,22 @@ export default class Client_connect_success extends Component<Props>{
                 </View>
 
                 <View style={{backgroundColor:'',flex:1,alignSelf:'center',alignItems:'flex-start',flexDirection:'row'}}>
-                    <Text style={{fontSize:fontSize1,color:styles.text.color}}>Enter your name</Text>
+                    <Text style={{fontSize:24, fontWeight: 'bold',color:styles.text.color,marginRight: 5}}>Enter your name:</Text>
 
                 </View>
                 <View style={{backgroundColor:'',flex:2,alignSelf:'center',alignItems:'flex-start',flexDirection:'row'}}>
-                    <TextInput
-                         //keyboardType='numeric'
-                         autoFocus='true'
-                         underlineColorAndroid={input_text_color}
-                         style={{color:input_text_color,fontSize:fontSize1}}
-                         //maxLength={4}  //setting limit of input
-                         onChangeText={n=>{this.name=n;}}
-                    />
+                <View style={{width:100}}>
+                <TextInput
+                     placeholder="My Name"
+                     autoFocur='true'
+                     underlineColorAndroid='#33d9e1'
+                     style={{fontSize:22, color:input_text_color,height:45}}
+                     onChangeText={n=>{this.name=n;}}
+                /></View>
                 </View>
+
                 <View style={{flex:3}}>
-                    <Button type='solid' title="Create" buttonStyle={styles.button} onPress={()=>{
+                    <Button type='solid' title="OK" buttonStyle={styles.button} onPress={()=>{
                       //this.props.ch_page(2);
                     // this.props.screenProps.send({event:'join_room',user_id:'master',room:this.room_number});
                      //this.props.screenProps.set_room_number(this.room_number);

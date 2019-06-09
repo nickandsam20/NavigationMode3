@@ -5,6 +5,7 @@ import { createDrawerNavigator, createStackNavigator, createAppContainer } from 
 
 import Top2 from "./screens/aatops/Top2";
 import Selection from "./screens/aatops/Selection";
+import ConnectSelect from "./screens/aatops/ConnectSelect";
 import Mastermode from "./screens/aatops/Mastermode";
 import Master1 from "./screens/aatops/Master1";
 import Master2 from "./screens/aatops/Master2";
@@ -161,6 +162,7 @@ export default class App extends Component<Props>{
           Top2: {screen: Top2},
           Master_main_page:{screen:Master_main_page},
       //    Selection: { screen: Selection },
+          ConnectSelect:{screen:ConnectSelect},
           Home: { screen: Home },
           Anatomy: { screen: Anatomy },
           Header: { screen: Header },
@@ -190,7 +192,7 @@ export default class App extends Component<Props>{
           NHDatePicker: { screen: NHDatePicker }
         },
         {
-          initialRouteName: "Recordermode2",
+          initialRouteName: "Master_main_page",
           contentOptions: {
             activeTintColor: "#e91e63"
           },
@@ -205,7 +207,7 @@ export default class App extends Component<Props>{
 
           Master1:{screen:Master1},
           Master2:{screen:Master2},
-          Master_main_page:{screen:Master_main_page},
+
           Client_connect1:{screen:Client_connect1},
           Client_connect_fail:{screen:Client_connect_fail},
           Client_connect_success:{screen:Client_connect_success},
