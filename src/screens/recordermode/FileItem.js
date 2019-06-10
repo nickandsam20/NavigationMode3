@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import DialogInput from 'react-native-dialog-input';
+import { ConfirmDialog } from 'react-native-simple-dialogs';
 
 import {
     View,
@@ -103,7 +105,7 @@ export default class FileItem extends React.Component {
               </Left>
               <Body style={{flex:4, alignItems: 'flex-start'}}>
                 <Text style={styles.fileInfo}>{ this.props.filename }</Text>
-                <Text numberOfLines={1} note>06/05   {this.state.playTime}</Text>
+                <Text numberOfLines={1} note>06/10   {this.state.playTime}</Text>
               </Body>
 
 

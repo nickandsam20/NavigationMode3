@@ -53,7 +53,7 @@ const styles=StyleSheet.create({
     },
     underline:{
       textDecorationLine: 'underline',
-      fontWeight: 'bold',fontSize:15, color:'#666666',
+      fontWeight: 'bold',fontSize:15, color:'#7b7b7b',
 
     },
 });

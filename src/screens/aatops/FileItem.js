@@ -93,10 +93,11 @@ export default class FileItem extends React.Component {
                     style={styles.playButton}
                     onPress={this.chooseFile}>
                     <Text style={styles.fileInfo}>{ this.props.filename }</Text>
+                    <Text style={styles.textInfo}>06/10</Text>
                 </TouchableOpacity>
                 <Right style={{flex:4}}>
                     <View style={{flexDirection: 'row'}} >
-                        {this.props.Playing ? <Image style={{marginTop:9, marginRight:12}} source={require("../recordermode/assets/Play/play.png")}></Image> : <View></View>}
+                        {this.props.Playing ? <Image style={{marginTop:9, marginRight:12}} source={require("../recordermode/assets/Play/playing.png")}></Image> : <View></View>}
                         <Button transparent  style={{marginHorizontal:10}} onPress={this.rename}>
                             <Image style={{width:20, height:20}}  source={require("../recordermode/assets/Play/rename.png")}/>
                         </Button>
@@ -143,15 +144,25 @@ const styles = StyleSheet.create({
         backgroundColor: '#666666',
         flexDirection: 'row',
         marginBottom: 1,
-        paddingVertical: 8
+        paddingVertical: 8,
+        justifyContent: 'center'
+
     },
     playButton: {
         flex: 4
     },
     fileInfo: {
-        color: 'black',
-        fontSize: 24,
-        marginLeft: 16
+        color: 'white',
+        fontSize: 20,
+        marginLeft: 16,
+        justifyContent: 'center'
+
+    },
+    textInfo:{
+      color: '#212121',
+      fontSize: 13,
+      marginLeft: 16,
+      justifyContent: 'center'
     },
     optionButton: {
         flex: 1,

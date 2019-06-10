@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import {
     View,
-    StyleSheet, 
+    StyleSheet,
     Text,
     Image,
     TouchableOpacity
@@ -65,14 +65,14 @@ export default class FileItem extends React.Component {
             return;
         });
     }
-      
+
     onPausePlay = async () => {
         this.setState({
             isPlaying: false
         });
         await this.audioRecorderPlayer.pausePlayer();
     }
-      
+
     onStopPlay = async () => {
         this.onStartPlay();
         console.log('onStopPlay');
@@ -91,7 +91,7 @@ export default class FileItem extends React.Component {
     render() {
         return (
             <View style={styles.root}>
-                <TouchableOpacity 
+                <TouchableOpacity
                     style={styles.button}
                     onPress={ this.state.isPlaying ? this.onPausePlay : this.onStartPlay } >
                     <Image source={ this.state.isPlaying ? pauseBtn : playBtn }/>
@@ -135,8 +135,8 @@ const styles = StyleSheet.create({
     },
     fileInfo: {
         flex: 1,
-        color: 'black',
-        fontSize: 24,
+        color: 'white',
+        fontSize: 20,
         marginTop: 8,
         marginLeft: 8
     },
@@ -147,10 +147,11 @@ const styles = StyleSheet.create({
     },
     timeText: {
         flex: 2,
-        color: 'black',
-        fontSize: 16,
+        color: 'white',
+        fontSize: 13,
         marginLeft: 8
     },
+
     progressBar: {
         flex: 5,
         marginTop: 8,

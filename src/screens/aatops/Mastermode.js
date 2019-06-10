@@ -170,7 +170,7 @@ class Mastermode extends Component {
         </Header>
 
  <Content padder>
-     <View style={{flex: 1, flexDirection: 'row'}}>
+     <View style={{flex: 1, flexDirection: 'row',marginTop: 20,marginLeft:20 }}>
         <Button style={{flex: 2,alignSelf: 'center',justifyContent: 'center'}}
           transparent
           onPress={ (onrecord) =>{
@@ -206,7 +206,7 @@ class Mastermode extends Component {
     </View>
     </View>
 
-  <View style={{flex: 5, flexDirection: 'row',justifyContent: 'center',alignSelf:'center',paddingVertical: 15}} >
+  <View style={{flex: 5, flexDirection: 'row',justifyContent: 'center',alignSelf:'center',paddingVertical: 40}} >
 
   <View style={{flex:1,marginLeft: 30}}>
     <View>
