@@ -156,6 +156,6 @@ const styles = StyleSheet.create({
         flex: 5,
         marginTop: 8,
         marginBottom: 24,
-        marginLeft: 6
+        marginRight:8,
     }
 });
